@@ -1,0 +1,2 @@
+gradlew eol=lf
+*.bat eol=crlf
