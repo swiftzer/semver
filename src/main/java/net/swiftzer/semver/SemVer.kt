@@ -114,14 +114,14 @@ data class SemVer(
             }
         }
 
-        if (parts.size == endIndex + 1 && otherParts.size > endIndex + 1) {
+        return if (parts.size == endIndex + 1 && otherParts.size > endIndex + 1) {
             // parts is ended and otherParts is not ended
-            return -1
+            -1
         } else if (parts.size > endIndex + 1 && otherParts.size == endIndex + 1) {
             // parts is not ended and otherParts is ended
-            return 1
+            1
         } else {
-            return 0
+            0
         }
     }
 
