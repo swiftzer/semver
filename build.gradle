@@ -41,6 +41,22 @@ compileTestKotlin {
 dokka {
     outputFormat = 'html'
     outputDirectory = "$buildDir/javadoc"
+    linkMapping {
+        dir = "src/main/java"
+        url = "https://github.com/swiftzer/semver/tree/master/src/main/java"
+        suffix = "#L"
+    }
+}
+
+task dokkaJavadoc(type: org.jetbrains.dokka.gradle.DokkaTask) {
+    outputFormat = 'javadoc'
+    outputDirectory = javadoc.destinationDir
+    inputs.dir 'src/main/java'
+}
+
+task javadocJar(type: Jar, dependsOn: dokkaJavadoc) {
+    classifier = 'javadoc'
+    from javadoc.destinationDir
 }
 
 publish {
