@@ -22,6 +22,7 @@ data class SemVer(
          * @param version version string.
          * @throws IllegalArgumentException if the version is not valid.
          */
+        @JvmStatic
         fun parse(version: String): SemVer {
             val pattern = Regex("""(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)(?:-([\dA-z\-]+(?:\.[\dA-z\-]+)*))?(?:\+([\dA-z\-]+(?:\.[\dA-z\-]+)*))?""")
             val result = pattern.matchEntire(version) ?: throw IllegalArgumentException("Invalid version string [$version]")
@@ -43,6 +44,10 @@ data class SemVer(
         if (buildMetadata != null) require(buildMetadata.matches(Regex("""[\dA-z\-]+(?:\.[\dA-z\-]+)*"""))) { "Build metadata is not valid" }
     }
 
+    /**
+     * Build the version name string.
+     * @return version name string in Semantic Versioning 2.0.0 specification.
+     */
     override fun toString(): String = buildString {
         append("$major.$minor.$patch")
         if (preRelease != null) {
