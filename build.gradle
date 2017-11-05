@@ -1,5 +1,5 @@
 group 'net.swiftzer.semver'
-version '1.0.0'
+version '1.0.1'
 
 buildscript {
     ext.kotlin_version = '1.1.51'
@@ -63,7 +63,7 @@ publish {
     userOrg = 'swiftzer'
     groupId = 'net.swiftzer.semver'
     artifactId = 'semver'
-    publishVersion = '1.0.0'
+    publishVersion = '1.0.1'
     desc = 'Kotlin data class for Semantic Versioning 2.0.0 specification (SemVer)'
     website = 'https://github.com/swiftzer/semver'
 }
