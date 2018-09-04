@@ -24,7 +24,7 @@ data class SemVer(
          */
         @JvmStatic
         fun parse(version: String): SemVer {
-            val pattern = Regex("""(0|[1-9]\d*)?(\.0|[1-9]\d*)?(\.0|[1-9]\d*)(?:-([\dA-z\-]+(?:\.[\dA-z\-]+)*))?(?:\+([\dA-z\-]+(?:\.[\dA-z\-]+)*))?""")
+            val pattern = Regex("""(0|[1-9]\d*)?(?:\.)?(0|[1-9]\d*)?(?:\.)?(0|[1-9]\d*)?(?:-([\dA-z\-]+(?:\.[\dA-z\-]+)*))?(?:\+([\dA-z\-]+(?:\.[\dA-z\-]+)*))?""")
             val result = pattern.matchEntire(version) ?: throw IllegalArgumentException("Invalid version string [$version]")
             return SemVer(
                     major = if (result.groupValues[1].isEmpty()) 0 else result.groupValues[1].toInt(),
