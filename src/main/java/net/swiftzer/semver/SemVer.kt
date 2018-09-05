@@ -24,12 +24,12 @@ data class SemVer(
          */
         @JvmStatic
         fun parse(version: String): SemVer {
-            val pattern = Regex("""(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)(?:-([\dA-z\-]+(?:\.[\dA-z\-]+)*))?(?:\+([\dA-z\-]+(?:\.[\dA-z\-]+)*))?""")
+            val pattern = Regex("""(0|[1-9]\d*)?(?:\.)?(0|[1-9]\d*)?(?:\.)?(0|[1-9]\d*)?(?:-([\dA-z\-]+(?:\.[\dA-z\-]+)*))?(?:\+([\dA-z\-]+(?:\.[\dA-z\-]+)*))?""")
             val result = pattern.matchEntire(version) ?: throw IllegalArgumentException("Invalid version string [$version]")
             return SemVer(
-                    major = result.groupValues[1].toInt(),
-                    minor = result.groupValues[2].toInt(),
-                    patch = result.groupValues[3].toInt(),
+                    major = if (result.groupValues[1].isEmpty()) 0 else result.groupValues[1].toInt(),
+                    minor = if (result.groupValues[2].isEmpty()) 0 else result.groupValues[2].toInt(),
+                    patch = if (result.groupValues[3].isEmpty()) 0 else result.groupValues[3].toInt(),
                     preRelease = if (result.groupValues[4].isEmpty()) null else result.groupValues[4],
                     buildMetadata = if (result.groupValues[5].isEmpty()) null else result.groupValues[5]
             )
