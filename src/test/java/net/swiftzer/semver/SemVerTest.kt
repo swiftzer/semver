@@ -46,9 +46,37 @@ class SemVerTest {
     }
 
     @Test
+    fun parseIncompleteNumeric1() {
+        val actual = SemVer.parse("432")
+        val expected = SemVer(432)
+        assertEquals(expected, actual)
+    }
+
+    @Test
+    fun parseIncompleteNumeric2() {
+        val actual = SemVer.parse("53.203")
+        val expected = SemVer(53, 203)
+        assertEquals(expected, actual)
+    }
+
+    @Test
+    fun parseIncompleteNumeric3() {
+        val actual = SemVer.parse("2..235")
+        val expected = SemVer(2, 0, 235)
+        assertEquals(expected, actual)
+    }
+
+    @Test
     fun parsePreRelease() {
         val actual = SemVer.parse("1.0.0-alpha.beta-a.12")
         val expected = SemVer(1, 0, 0, preRelease = "alpha.beta-a.12")
+        assertEquals(expected, actual)
+    }
+
+    @Test
+    fun parseIncompletePreRelease() {
+        val actual = SemVer.parse("34..430-alpha.beta.gamma-a.12")
+        val expected = SemVer(34, 0, 430, preRelease = "alpha.beta.gamma-a.12")
         assertEquals(expected, actual)
     }
 
@@ -60,9 +88,30 @@ class SemVerTest {
     }
 
     @Test
+    fun parseIncompleteMetadata() {
+        val actual = SemVer.parse("88.30+exp.sha-part.5114f85")
+        val expected = SemVer(88, 30, 0, buildMetadata = "exp.sha-part.5114f85")
+        assertEquals(expected, actual)
+    }
+
+    @Test
     fun parseAll() {
         val actual = SemVer.parse("1.0.0-beta+exp.sha.5114f85")
         val expected = SemVer(1, 0, 0, preRelease = "beta", buildMetadata = "exp.sha.5114f85")
+        assertEquals(expected, actual)
+    }
+
+    @Test
+    fun parseIncompleteAll1() {
+        val actual = SemVer.parse("..-beta+exp.sha.5114f85")
+        val expected = SemVer(0, 0, 0, preRelease = "beta", buildMetadata = "exp.sha.5114f85")
+        assertEquals(expected, actual)
+    }
+
+    @Test
+    fun parseIncompleteAll2() {
+        val actual = SemVer.parse(".34.-beta+exp.sha.5114f85")
+        val expected = SemVer(0, 34, 0, preRelease = "beta", buildMetadata = "exp.sha.5114f85")
         assertEquals(expected, actual)
     }
 
