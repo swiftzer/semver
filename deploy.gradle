@@ -1,10 +1,10 @@
 apply plugin: 'com.jfrog.bintray'
 
 bintray {
-    user = bintrayUser // Pass from command line
-    key = bintrayKey // Pass from command line
+    user = project.findProperty('bintrayUser') ?: System.getenv('BINTRAY_USER')
+    key = project.findProperty('bintrayKey') ?: System.getenv('BINTRAY_KEY')
     configurations = ['archives']
-    dryRun = false
+    dryRun = true
     publish = true
     override = true
     pkg {
