@@ -5,7 +5,7 @@ jdk:
 before_install:
   - chmod +x gradlew
 script:
-  - ./gradlew clean test --info bintrayUpload -PbintrayUser=$BINTRAY_USER -PbintrayKey=$BINTRAY_KEY
+  - ./gradlew clean test --info -PbintrayUser=$BINTRAY_USER -PbintrayKey=$BINTRAY_KEY
 deploy:
   provider: script
   script: ./gradlew clean bintrayUpload -PbintrayUser=$BINTRAY_USER -PbintrayKey=$BINTRAY_KEY
