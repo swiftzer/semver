@@ -16,7 +16,7 @@ Gradle
     }
 
     dependencies {
-        compile 'net.swiftzer.semver:semver:1.0.2'
+        compile 'net.swiftzer.semver:semver:1.1.0'
     }
 
 ## Usage
