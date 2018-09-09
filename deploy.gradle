@@ -1,0 +1,34 @@
+apply plugin: 'com.jfrog.bintray'
+
+bintray {
+    user = bintrayUser // Pass from command line
+    key = bintrayKey // Pass from command line
+    configurations = ['archives']
+    dryRun = false
+    publish = true
+    override = true
+    pkg {
+        userOrg = 'swiftzer'
+        repo = 'maven'
+        name = 'semver'
+        version {
+            name = rootProject.version
+            vcsTag = "v${rootProject.version}"
+        }
+    }
+}
+
+task javadocJar(type: Jar, dependsOn: dokkaJavadoc, overwrite: true) {
+    classifier = 'javadoc'
+    from javadoc.destinationDir
+}
+
+task sourcesJar(type: Jar, dependsOn: classes, overwrite: true) {
+    classifier = 'sources'
+    from sourceSets.main.allSource
+}
+
+artifacts {
+    archives sourcesJar
+    archives javadocJar
+}

@@ -1,9 +1,9 @@
 group 'net.swiftzer.semver'
-version '1.0.1'
+version '1.1.0'
 
 buildscript {
-    ext.kotlin_version = '1.1.51'
-    ext.dokka_version = '0.9.15'
+    ext.kotlin_version = '1.2.61'
+    ext.dokka_version = '0.9.17'
 
     repositories {
         mavenCentral()
@@ -12,20 +12,21 @@ buildscript {
     dependencies {
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
         classpath "org.jetbrains.dokka:dokka-gradle-plugin:$dokka_version"
-        classpath 'com.novoda:bintray-release:0.5.0'
+        classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.+'
     }
 }
 
 apply plugin: 'kotlin'
 apply plugin: 'org.jetbrains.dokka'
-apply plugin: 'com.novoda.bintray-release'
+apply plugin: 'com.jfrog.bintray'
 
 repositories {
     mavenCentral()
+    jcenter()
 }
 
 dependencies {
-    compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+    compileOnly "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
     testCompile "org.jetbrains.kotlin:kotlin-test-junit:$kotlin_version"
     testCompile 'junit:junit:4.12'
 }
@@ -51,20 +52,7 @@ dokka {
 task dokkaJavadoc(type: org.jetbrains.dokka.gradle.DokkaTask) {
     outputFormat = 'javadoc'
     outputDirectory = javadoc.destinationDir
-    inputs.dir 'src/main/java'
+    inputs.dir sourceSets.main.allSource
 }
 
-task javadocJar(type: Jar, dependsOn: dokkaJavadoc) {
-    classifier = 'javadoc'
-    from javadoc.destinationDir
-}
-
-publish {
-    userOrg = 'swiftzer'
-    groupId = 'net.swiftzer.semver'
-    artifactId = 'semver'
-    publishVersion = '1.0.1'
-    desc = 'Kotlin data class for Semantic Versioning 2.0.0 specification (SemVer)'
-    website = 'https://github.com/swiftzer/semver'
-}
-
+apply from: 'deploy.gradle'

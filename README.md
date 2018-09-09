@@ -1,6 +1,7 @@
 # SemVer
 
 [![Build Status](https://travis-ci.org/swiftzer/semver.svg?branch=master)](https://travis-ci.org/swiftzer/semver)
+[ ![Download](https://api.bintray.com/packages/swiftzer/maven/semver/images/download.svg) ](https://bintray.com/swiftzer/maven/semver/_latestVersion)
 
 Kotlin data class for [Semantic Versioning 2.0.0](http://semver.org/spec/v2.0.0.html) specification.
 
@@ -15,10 +16,8 @@ Gradle
     }
 
     dependencies {
-        compile 'net.swiftzer.semver:semver:1.0.0'
+        compile 'net.swiftzer.semver:semver:1.0.2'
     }
-
-[Bintray](https://bintray.com/swiftzer/maven/semver)
 
 ## Usage
 
