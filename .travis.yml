@@ -6,7 +6,7 @@ jdk:
 before_install:
   - chmod +x gradlew
 script:
-- ./gradlew check --info
+  - ./gradlew check
 after_success:
   - bash <(curl -s https://codecov.io/bash) -t uuid-repo-token
 deploy:
