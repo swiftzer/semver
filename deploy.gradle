@@ -15,7 +15,7 @@ bintray {
     user = project.findProperty('bintrayUser') ?: System.getenv('BINTRAY_USER')
     key = project.findProperty('bintrayKey') ?: System.getenv('BINTRAY_KEY')
     publications = ['SemverPublication']
-    dryRun = true
+    dryRun = false
     publish = true
     override = true
     pkg {
