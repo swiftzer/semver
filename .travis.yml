@@ -2,13 +2,13 @@ language: java
 
 sudo: false
 jdk:
-  - oraclejdk8
+  - openjdk8
 before_install:
   - chmod +x gradlew
 script:
   - ./gradlew check
 after_success:
-  - bash <(curl -s https://codecov.io/bash) -t uuid-repo-token
+  - bash <(curl -s https://codecov.io/bash)
 deploy:
   provider: script
   script: ./gradlew clean bintrayUpload
