@@ -1,9 +1,20 @@
 apply plugin: 'com.jfrog.bintray'
+apply plugin: 'maven-publish'
+
+publishing {
+    publications {
+        SemverPublication(MavenPublication) {
+            from components.java
+            artifact sourcesJar
+            artifact javadocJar
+        }
+    }
+}
 
 bintray {
     user = project.findProperty('bintrayUser') ?: System.getenv('BINTRAY_USER')
     key = project.findProperty('bintrayKey') ?: System.getenv('BINTRAY_KEY')
-    configurations = ['archives']
+    publications = ['SemverPublication']
     dryRun = true
     publish = true
     override = true
