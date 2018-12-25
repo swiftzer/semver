@@ -2,6 +2,7 @@
 
 [![Build Status](https://travis-ci.org/swiftzer/semver.svg?branch=master)](https://travis-ci.org/swiftzer/semver)
 [![codecov](https://codecov.io/gh/swiftzer/semver/branch/master/graph/badge.svg)](https://codecov.io/gh/swiftzer/semver)
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fswiftzer%2Fsemver.svg?type=shield)](https://app.fossa.io/projects/git%2Bgithub.com%2Fswiftzer%2Fsemver?ref=badge_shield)
 [ ![Download](https://api.bintray.com/packages/swiftzer/maven/semver/images/download.svg) ](https://bintray.com/swiftzer/maven/semver/_latestVersion)
 
 Kotlin data class for [Semantic Versioning 2.0.0](http://semver.org/spec/v2.0.0.html) specification.
@@ -37,3 +38,7 @@ Comparing version numbers
     val semVer1 = SemVer(1, 0, 0)
     val semVer2 = SemVer(1, 0, 2)
     assertEquals(-1, semVer1.compareTo(semVer2))
+
+
+## License
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fswiftzer%2Fsemver.svg?type=large)](https://app.fossa.io/projects/git%2Bgithub.com%2Fswiftzer%2Fsemver?ref=badge_large)
