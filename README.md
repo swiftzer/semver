@@ -12,28 +12,34 @@ Support parsing version number string and comparing version numbers using `Compa
 
 Gradle
 
-    repositories {
-        jcenter()
-    }
+```groovy
+repositories {
+    jcenter()
+}
 
-    dependencies {
-        compile 'net.swiftzer.semver:semver:1.1.0'
-    }
+dependencies {
+    compile 'net.swiftzer.semver:semver:1.1.1'
+}
+```
 
 ## Usage
 
 Parsing version number
 
-    val version: SemVer = SemVer.parse("1.0.0-beta+exp.sha.5114f85")
-    
-    version.major // 1
-    version.minor // 0
-    version.patch // 0
-    version.preRelease // "beta"
-    version.buildMetadata // "exp.sha.5114f85"
+```kotlin
+val version: SemVer = SemVer.parse("1.0.0-beta+exp.sha.5114f85")
+
+version.major // 1
+version.minor // 0
+version.patch // 0
+version.preRelease // "beta"
+version.buildMetadata // "exp.sha.5114f85"
+```
 
 Comparing version numbers
 
-    val semVer1 = SemVer(1, 0, 0)
-    val semVer2 = SemVer(1, 0, 2)
-    assertEquals(-1, semVer1.compareTo(semVer2))
+```kotlin
+val semVer1 = SemVer(1, 0, 0)
+val semVer2 = SemVer(1, 0, 2)
+assertEquals(-1, semVer1.compareTo(semVer2))
+```
