@@ -111,10 +111,15 @@ data class SemVer(
                     if (part < otherPart) return -1
                 }
                 else -> {
-                    val partInt = part.toInt()
-                    val otherPartInt = otherPart.toInt()
-                    if (partInt > otherPartInt) return 1
-                    if (partInt < otherPartInt) return -1
+                    try{
+                        val partInt = part.toInt()
+                        val otherPartInt = otherPart.toInt()
+                        if (partInt > otherPartInt) return 1
+                        if (partInt < otherPartInt) return -1
+                    } catch (_ : NumberFormatException) {
+                        // When part or otherPart doesn't fit in an Int, compare as strings
+                        return part.compareTo(otherPart)
+                    }
                 }
             }
         }
