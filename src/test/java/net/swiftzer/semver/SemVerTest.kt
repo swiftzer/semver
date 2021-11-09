@@ -293,4 +293,25 @@ class SemVerTest {
         val semVer2 = SemVer(1, 0, 0, preRelease = "alpha", buildMetadata = "abc")
         assertEquals(0, semVer1.compareTo(semVer2))
     }
+
+    @Test
+    fun compareToPreReleaseNonNumericSmaller() {
+        val semVer1 = SemVer(1, 0, 0, preRelease = Int.MAX_VALUE.toString())
+        val semVer2 = SemVer(1, 0, 0, preRelease = Long.MAX_VALUE.toString())
+        assertTrue { semVer1 < semVer2 }
+    }
+
+    @Test
+    fun compareToPreReleaseNonNumericLarger() {
+        val semVer1 = SemVer(1, 0, 0, preRelease = Long.MAX_VALUE.toString())
+        val semVer2 = SemVer(1, 0, 0, preRelease = Int.MAX_VALUE.toString())
+        assertTrue { semVer1 > semVer2 }
+    }
+
+    @Test
+    fun compareToPreReleaseNonNumericSame() {
+        val semVer1 = SemVer(1, 0, 0, preRelease = Long.MAX_VALUE.toString())
+        val semVer2 = SemVer(1, 0, 0, preRelease = Long.MAX_VALUE.toString())
+        assertEquals(0, semVer1.compareTo(semVer2))
+    }
 }
