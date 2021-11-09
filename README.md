@@ -2,7 +2,6 @@
 
 [![Build Status](https://travis-ci.org/swiftzer/semver.svg?branch=master)](https://travis-ci.org/swiftzer/semver)
 [![codecov](https://codecov.io/gh/swiftzer/semver/branch/master/graph/badge.svg)](https://codecov.io/gh/swiftzer/semver)
-[ ![Download](https://api.bintray.com/packages/swiftzer/maven/semver/images/download.svg) ](https://bintray.com/swiftzer/maven/semver/_latestVersion)
 
 Kotlin data class for [Semantic Versioning 2.0.0](http://semver.org/spec/v2.0.0.html) specification.
 
@@ -14,11 +13,11 @@ Gradle
 
 ```groovy
 repositories {
-    jcenter()
+    mavenCentral()
 }
 
 dependencies {
-    compile 'net.swiftzer.semver:semver:1.1.1'
+    implementation 'net.swiftzer.semver:semver:1.1.2'
 }
 ```
 

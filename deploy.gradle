@@ -1,33 +1,5 @@
-apply plugin: 'com.jfrog.bintray'
-apply plugin: 'maven-publish'
-
-publishing {
-    publications {
-        SemverPublication(MavenPublication) {
-            from components.java
-            artifact sourcesJar
-            artifact javadocJar
-        }
-    }
-}
-
-bintray {
-    user = project.findProperty('bintrayUser') ?: System.getenv('BINTRAY_USER')
-    key = project.findProperty('bintrayKey') ?: System.getenv('BINTRAY_KEY')
-    publications = ['SemverPublication']
-    dryRun = false
-    publish = true
-    override = true
-    pkg {
-        userOrg = 'swiftzer'
-        repo = 'maven'
-        name = 'semver'
-        version {
-            name = rootProject.version
-            vcsTag = "v${rootProject.version}"
-        }
-    }
-}
+apply plugin: 'maven'
+apply plugin: 'signing'
 
 task javadocJar(type: Jar, dependsOn: dokkaJavadoc, overwrite: true) {
     classifier = 'javadoc'
@@ -40,6 +12,53 @@ task sourcesJar(type: Jar, dependsOn: classes, overwrite: true) {
 }
 
 artifacts {
-    archives sourcesJar
-    archives javadocJar
+    archives javadocJar, sourcesJar
+}
+
+signing {
+    sign configurations.archives
+}
+
+uploadArchives {
+    repositories {
+        mavenDeployer {
+            beforeDeployment { MavenDeployment deployment -> signing.signPom(deployment) }
+
+            repository(url: "https://oss.sonatype.org/service/local/staging/deploy/maven2/") {
+                authentication(userName: ossrhUsername, password: ossrhPassword)
+            }
+
+            snapshotRepository(url: "https://oss.sonatype.org/content/repositories/snapshots/") {
+                authentication(userName: ossrhUsername, password: ossrhPassword)
+            }
+
+            pom.project {
+                name 'SemVer'
+                packaging 'jar'
+                description 'Kotlin data class for Semantic Versioning 2.0.0'
+                url 'https://github.com/swiftzer/semver'
+
+                scm {
+                    connection 'scm:git:github.com/swiftzer/semver.git'
+                    developerConnection 'scm:git:ssh://github.com/swiftzer/semver.git'
+                    url 'https://github.com/swiftzer/semver/tree/master'
+                }
+
+                licenses {
+                    license {
+                        name 'MIT License'
+                        url 'https://opensource.org/licenses/mit-license.php'
+                    }
+                }
+
+                developers {
+                    developer {
+                        id 'ericksli'
+                        name 'Eric Li'
+                        email 'eric@swiftzer.net'
+                    }
+                }
+            }
+        }
+    }
 }
