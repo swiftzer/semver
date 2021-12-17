@@ -314,4 +314,28 @@ class SemVerTest {
         val semVer2 = SemVer(1, 0, 0, preRelease = Long.MAX_VALUE.toString())
         assertEquals(0, semVer1.compareTo(semVer2))
     }
+
+    @Test
+    fun createsNextMajor() {
+        val newMajor = SemVer(1, 3, 5).nextMajor()
+        assertEquals(2, newMajor.major)
+        assertEquals(0, newMajor.minor)
+        assertEquals(0, newMajor.patch)
+    }
+
+    @Test
+    fun createsNextMinor() {
+        val newMinor = SemVer(1, 3, 5).nextMinor()
+        assertEquals(1, newMinor.major)
+        assertEquals(4, newMinor.minor)
+        assertEquals(0, newMinor.patch)
+    }
+
+    @Test
+    fun createsNextPatch() {
+        val newPatch = SemVer(1, 3, 5).nextPatch()
+        assertEquals(1, newPatch.major)
+        assertEquals(3, newPatch.minor)
+        assertEquals(6, newPatch.patch)
+    }
 }

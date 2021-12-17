@@ -135,5 +135,32 @@ data class SemVer(
         }
     }
 
+    /**
+     * Create a new [SemVer] with the next major number. Minor and patch number become 0.
+     * Pre-release and build metadata information is not applied to the new version.
+     * @return next major version
+     */
+    fun nextMajor(): SemVer {
+        return SemVer(major + 1)
+    }
+
+    /**
+     * Create a new [SemVer] with the same major number and the next minor number. Patch number becomes 0.
+     * Pre-release and build metadata information is not applied to the new version.
+     * @return next minor version
+     */
+    fun nextMinor(): SemVer {
+        return SemVer(major, minor + 1)
+    }
+
+    /**
+     * Create a new [SemVer] with the same major and minor number and the next patch number.
+     * Pre-release and build metadata information is not applied to the new version.
+     * @return next patch version
+     */
+    fun nextPatch(): SemVer {
+        return SemVer(major, minor, patch + 1)
+    }
+
     private fun String.isNumeric(): Boolean = this.matches(Regex("""\d+"""))
 }

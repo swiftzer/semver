@@ -42,3 +42,12 @@ val semVer1 = SemVer(1, 0, 0)
 val semVer2 = SemVer(1, 0, 2)
 assertEquals(-1, semVer1.compareTo(semVer2))
 ```
+
+Creating next version numbers
+
+```kotlin
+val semVer = SemVer(1, 3, 5)
+assertEquals(SemVer(1, 3, 6), semVer.nextPatch())
+assertEquals(SemVer(1, 4, 0), semVer.nextMinor())
+assertEquals(SemVer(2, 0, 0), semVer.nextMajor())
+```
