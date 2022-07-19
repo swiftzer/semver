@@ -1,13 +1,14 @@
 group 'net.swiftzer.semver'
-version '1.2.0'
+version '1.3.0-SNAPSHOT'
 
 buildscript {
-    ext.kotlin_version = '1.3.10'
-    ext.dokka_version = '0.9.17'
+    ext.kotlin_version = '1.7.10'
+    ext.dokka_version = '1.7.0'
 
     repositories {
         mavenCentral()
     }
+
     dependencies {
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
         classpath "org.jetbrains.dokka:dokka-gradle-plugin:$dokka_version"
@@ -24,18 +25,19 @@ repositories {
 
 dependencies {
     compileOnly "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
-    testCompile "org.jetbrains.kotlin:kotlin-test-junit:$kotlin_version"
-    testCompile 'junit:junit:4.12'
+    testImplementation "org.jetbrains.kotlin:kotlin-test-junit:$kotlin_version"
+    testImplementation 'junit:junit:4.13'
 }
 
 compileKotlin {
-    kotlinOptions.jvmTarget = "1.6"
+    kotlinOptions.jvmTarget = "11"
 }
 
 compileTestKotlin {
-    kotlinOptions.jvmTarget = "1.6"
+    kotlinOptions.jvmTarget = "11"
 }
 
+/*
 dokka {
     outputFormat = 'html'
     outputDirectory = "$buildDir/javadoc"
@@ -51,9 +53,10 @@ task dokkaJavadoc(type: org.jetbrains.dokka.gradle.DokkaTask) {
     outputDirectory = javadoc.destinationDir
     inputs.dir sourceSets.main.allSource
 }
+*/
 
 jacoco {
-    toolVersion = '0.8.2'
+    toolVersion = '0.8.8'
 }
 
 jacocoTestReport {

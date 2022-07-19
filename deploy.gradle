@@ -1,12 +1,11 @@
-apply plugin: 'maven'
-apply plugin: 'signing'
+apply plugin: 'maven-publish'
 
-task javadocJar(type: Jar, dependsOn: dokkaJavadoc, overwrite: true) {
+task javadocJar(type: Jar, dependsOn: dokkaJavadoc, overwrite: false) {
     classifier = 'javadoc'
     from javadoc.destinationDir
 }
 
-task sourcesJar(type: Jar, dependsOn: classes, overwrite: true) {
+task sourcesJar(type: Jar, dependsOn: classes, overwrite: false) {
     classifier = 'sources'
     from sourceSets.main.allSource
 }
@@ -15,50 +14,10 @@ artifacts {
     archives javadocJar, sourcesJar
 }
 
-signing {
-    sign configurations.archives
-}
-
-uploadArchives {
+publishing {
     repositories {
-        mavenDeployer {
-            beforeDeployment { MavenDeployment deployment -> signing.signPom(deployment) }
-
-            repository(url: "https://oss.sonatype.org/service/local/staging/deploy/maven2/") {
-                authentication(userName: ossrhUsername, password: ossrhPassword)
-            }
-
-            snapshotRepository(url: "https://oss.sonatype.org/content/repositories/snapshots/") {
-                authentication(userName: ossrhUsername, password: ossrhPassword)
-            }
-
-            pom.project {
-                name 'SemVer'
-                packaging 'jar'
-                description 'Kotlin data class for Semantic Versioning 2.0.0'
-                url 'https://github.com/swiftzer/semver'
-
-                scm {
-                    connection 'scm:git:github.com/swiftzer/semver.git'
-                    developerConnection 'scm:git:ssh://github.com/swiftzer/semver.git'
-                    url 'https://github.com/swiftzer/semver/tree/master'
-                }
-
-                licenses {
-                    license {
-                        name 'MIT License'
-                        url 'https://opensource.org/licenses/mit-license.php'
-                    }
-                }
-
-                developers {
-                    developer {
-                        id 'ericksli'
-                        name 'Eric Li'
-                        email 'eric@swiftzer.net'
-                    }
-                }
-            }
+        maven {
+            url = "https://oss.sonatype.org/service/local/staging/deploy/maven2/"
         }
     }
 }
