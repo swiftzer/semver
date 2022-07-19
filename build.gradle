@@ -1,13 +1,14 @@
 group 'net.swiftzer.semver'
-version '1.2.0'
+version '1.3.0-SNAPSHOT'
 
 buildscript {
-    ext.kotlin_version = '1.3.10'
-    ext.dokka_version = '0.9.17'
+    ext.kotlin_version = '1.7.10'
+    ext.dokka_version = '1.7.0'
 
     repositories {
         mavenCentral()
     }
+
     dependencies {
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
         classpath "org.jetbrains.dokka:dokka-gradle-plugin:$dokka_version"
@@ -17,6 +18,7 @@ buildscript {
 apply plugin: 'kotlin'
 apply plugin: 'org.jetbrains.dokka'
 apply plugin: 'jacoco'
+apply plugin: 'maven-publish'
 
 repositories {
     mavenCentral()
@@ -24,36 +26,20 @@ repositories {
 
 dependencies {
     compileOnly "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
-    testCompile "org.jetbrains.kotlin:kotlin-test-junit:$kotlin_version"
-    testCompile 'junit:junit:4.12'
+    testImplementation "org.jetbrains.kotlin:kotlin-test-junit:$kotlin_version"
+    testImplementation 'junit:junit:4.13.2'
 }
 
 compileKotlin {
-    kotlinOptions.jvmTarget = "1.6"
+    kotlinOptions.jvmTarget = "11"
 }
 
 compileTestKotlin {
-    kotlinOptions.jvmTarget = "1.6"
-}
-
-dokka {
-    outputFormat = 'html'
-    outputDirectory = "$buildDir/javadoc"
-    linkMapping {
-        dir = "src/main/java"
-        url = "https://github.com/swiftzer/semver/tree/master/src/main/java"
-        suffix = "#L"
-    }
-}
-
-task dokkaJavadoc(type: org.jetbrains.dokka.gradle.DokkaTask) {
-    outputFormat = 'javadoc'
-    outputDirectory = javadoc.destinationDir
-    inputs.dir sourceSets.main.allSource
+    kotlinOptions.jvmTarget = "11"
 }
 
 jacoco {
-    toolVersion = '0.8.2'
+    toolVersion = '0.8.8'
 }
 
 jacocoTestReport {
@@ -66,4 +52,16 @@ jacocoTestReport {
 
 check.dependsOn jacocoTestReport
 
-apply from: 'deploy.gradle'
+publishing {
+    publications {
+        maven(MavenPublication) {
+            groupId = 'com.github.hduerkop'
+            artifactId = 'semver'
+            version = "1.3.0-SNAPSHOT"
+
+            pom {
+                description = 'SemVer library for Kotlin 1.7+'
+            }
+        }
+    }
+}
