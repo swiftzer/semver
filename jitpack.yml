@@ -2,4 +2,4 @@ jdk:
     - openjdk18
 install:
     - echo "Running a custom install command"
-    - ./gradlew clean :publishToMavenLocal -xtest
+    - ./gradlew clean build :publishToMavenLocal -xtest
