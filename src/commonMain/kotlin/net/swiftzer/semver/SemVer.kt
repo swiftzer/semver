@@ -1,5 +1,8 @@
 package net.swiftzer.semver
 
+import kotlin.jvm.JvmStatic
+import kotlin.math.min
+
 /**
  * Version number in [Semantic Versioning 2.0.0](http://semver.org/spec/v2.0.0.html) specification (SemVer).
  *
@@ -88,7 +91,7 @@ data class SemVer(
         val parts = preRelease.orEmpty().split(".")
         val otherParts = other.preRelease.orEmpty().split(".")
 
-        val endIndex = Math.min(parts.size, otherParts.size) - 1
+        val endIndex = min(parts.size, otherParts.size) - 1
         for (i in 0..endIndex) {
             val part = parts[i]
             val otherPart = otherParts[i]

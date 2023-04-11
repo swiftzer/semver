@@ -1,10 +1,6 @@
 package net.swiftzer.semver
 
-import org.junit.Test
-import kotlin.test.assertEquals
-import kotlin.test.assertFails
-import kotlin.test.assertFalse
-import kotlin.test.assertTrue
+import kotlin.test.*
 
 
 class SemVerTest {
