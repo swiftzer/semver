@@ -20,12 +20,12 @@ data class SemVer(
         /**
          * Parse the version string to [SemVer] data object.
          * @param version version string.
-         * @throws IllegalArgumentException if the version is not valid.
+         * @return `null` if the version is not valid.
          */
         @JvmStatic
-        fun parse(version: String): SemVer {
+        fun parseOrNull(version: String): SemVer? {
             val pattern = Regex("""(0|[1-9]\d*)?(?:\.)?(0|[1-9]\d*)?(?:\.)?(0|[1-9]\d*)?(?:-([\dA-z\-]+(?:\.[\dA-z\-]+)*))?(?:\+([\dA-z\-]+(?:\.[\dA-z\-]+)*))?""")
-            val result = pattern.matchEntire(version) ?: throw IllegalArgumentException("Invalid version string [$version]")
+            val result = pattern.matchEntire(version) ?: return null
             return SemVer(
                     major = if (result.groupValues[1].isEmpty()) 0 else result.groupValues[1].toInt(),
                     minor = if (result.groupValues[2].isEmpty()) 0 else result.groupValues[2].toInt(),
@@ -33,6 +33,16 @@ data class SemVer(
                     preRelease = if (result.groupValues[4].isEmpty()) null else result.groupValues[4],
                     buildMetadata = if (result.groupValues[5].isEmpty()) null else result.groupValues[5]
             )
+        }
+
+        /**
+         * Parse the version string to [SemVer] data object.
+         * @param version version string.
+         * @throws IllegalArgumentException if the version is not valid.
+         */
+        @JvmStatic
+        fun parse(version: String): SemVer {
+            return parseOrNull(version) ?: throw IllegalArgumentException("Invalid version string [$version]")
         }
     }
 
