@@ -121,6 +121,11 @@ class SemVerTest {
     }
 
     @Test
+    fun parseOrNull() {
+        assertEquals(null, SemVer.parseOrNull("1.0.1.4-beta+exp.sha.5114f85"))
+    }
+
+    @Test
     fun isInitialDevelopmentPhaseTrue() {
         assertTrue { SemVer(0, 23, 34, "alpha.123", "testing.123").isInitialDevelopmentPhase() }
     }
