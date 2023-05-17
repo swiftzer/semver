@@ -27,17 +27,17 @@ class SemVerTest {
 
     @Test
     fun initPreReleaseValidation() {
-//        assertEquals("a1B2c3", SemVer(preRelease = "a1B2c3").preRelease)
-//        assertEquals("0", SemVer(preRelease = "0").preRelease)
+        assertEquals("a1B2c3", SemVer(preRelease = "a1B2c3").preRelease)
+        assertEquals("0", SemVer(preRelease = "0").preRelease)
         assertEquals("01s", SemVer(preRelease = "01s").preRelease)
-//        assertEquals("1", SemVer(preRelease = "1").preRelease)
-//        assertEquals("1024", SemVer(preRelease = "1024").preRelease)
-//        assertEquals("--a1b2C3", SemVer(preRelease = "--a1b2C3").preRelease)
-//        assertFailsWith<IllegalArgumentException> { SemVer(preRelease = " ") }
-//        assertFailsWith<IllegalArgumentException> { SemVer(preRelease = "a!bc") }
-//        assertFailsWith<IllegalArgumentException> { SemVer(preRelease = "007") }
-//        assertFailsWith<IllegalArgumentException> { SemVer(preRelease = " --a1b2C3") }
-//        assertFailsWith<IllegalArgumentException> { SemVer(preRelease = "--a1b2C3 ") }
+        assertEquals("1", SemVer(preRelease = "1").preRelease)
+        assertEquals("1024", SemVer(preRelease = "1024").preRelease)
+        assertEquals("--a1b2C3", SemVer(preRelease = "--a1b2C3").preRelease)
+        assertFailsWith<IllegalArgumentException> { SemVer(preRelease = " ") }
+        assertFailsWith<IllegalArgumentException> { SemVer(preRelease = "a!bc") }
+        assertFailsWith<IllegalArgumentException> { SemVer(preRelease = "007") }
+        assertFailsWith<IllegalArgumentException> { SemVer(preRelease = " --a1b2C3") }
+        assertFailsWith<IllegalArgumentException> { SemVer(preRelease = "--a1b2C3 ") }
     }
 
     @Test

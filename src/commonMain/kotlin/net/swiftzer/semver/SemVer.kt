@@ -112,11 +112,6 @@ data class SemVer(
     private fun String.isNumeric(): Boolean = numericPattern.matches(this)
 
     companion object {
-        private val preReleasePattern =
-            Regex("""(?:0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*)(?:\.(?:0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*))*""")
-        private val buildMetadataPattern = Regex("""[0-9a-zA-Z-]+(?:\.[0-9a-zA-Z-]+)*""")
-        private val fullPattern =
-            Regex("""(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)(?:-((?:0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*)(?:\.(?:0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*))*))?(?:\+([0-9a-zA-Z-]+(?:\.[0-9a-zA-Z-]+)*))?""")
         private val numericPattern = Regex("""\d+""")
 
         /**

@@ -1,13 +1,16 @@
 import kotlinx.kover.api.CoverageEngine.JACOCO
 
 plugins {
-    kotlin("multiplatform") version "1.6.0"
-    id("org.jetbrains.kotlinx.kover") version "0.4.2"
-    id("org.jetbrains.dokka") version "1.6.0"
+    kotlin("multiplatform") version "1.7.20"
+    id("org.jetbrains.kotlinx.kover") version "0.6.1"
+    id("org.jetbrains.dokka") version "1.7.10"
+    id("io.kotest.multiplatform") version "5.0.2"
 }
 
 group = "net.swiftzer.semver"
 version = "2.0.0"
+
+ext["kotestVersion"] = "5.5"
 
 repositories {
     mavenCentral()
@@ -19,10 +22,11 @@ kotlin {
             kotlinOptions.jvmTarget = "1.8"
         }
         testRuns["test"].executionTask.configure {
-            useJUnit()
+            useJUnitPlatform()
         }
     }
-    js {
+    js(IR) {
+        browser()
         nodejs()
     }
     val hostOs = System.getProperty("os.name")
@@ -39,20 +43,35 @@ kotlin {
         val commonTest by getting {
             dependencies {
                 implementation(kotlin("test"))
+                implementation("io.kotest:kotest-framework-engine:${ext["kotestVersion"]}")
+                implementation("io.kotest:kotest-assertions-core:${ext["kotestVersion"]}")
             }
         }
         val jvmMain by getting
-        val jvmTest by getting
+        val jvmTest by getting {
+            dependencies {
+                implementation("io.kotest:kotest-runner-junit5:${ext["kotestVersion"]}")
+            }
+        }
         val jsMain by getting
         val jsTest by getting
         val nativeMain by getting
         val nativeTest by getting
     }
 }
+//
+//kover {
+////    isEnabled = true
+//    coverageEngine.set(JACOCO)
+//    jacocoEngineVersion.set("0.8.7")
+//    generateReportOnCheck.set(true)
+//}
 
-kover {
-    isEnabled = true
-    coverageEngine.set(JACOCO)
-    jacocoEngineVersion.set("0.8.7")
-    generateReportOnCheck.set(true)
-}
+//extensions.configure<KoverMergedConfig> {
+//    enable()
+//    // configure merged tasks
+//}
+
+//koverMerged {
+//    enable()
+//}
