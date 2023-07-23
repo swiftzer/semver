@@ -1,16 +1,13 @@
-import kotlinx.kover.api.CoverageEngine.JACOCO
-
 plugins {
-    kotlin("multiplatform") version "1.7.20"
-    id("org.jetbrains.kotlinx.kover") version "0.6.1"
-    id("org.jetbrains.dokka") version "1.7.10"
-    id("io.kotest.multiplatform") version "5.0.2"
+    alias(libs.plugins.kotlin.multiplatform)
+    alias(libs.plugins.kotest.multiplatform)
+    alias(libs.plugins.dokka)
+    alias(libs.plugins.kover)
+    alias(libs.plugins.detekt)
 }
 
 group = "net.swiftzer.semver"
 version = "2.0.0"
-
-ext["kotestVersion"] = "5.5"
 
 repositories {
     mavenCentral()
@@ -42,15 +39,15 @@ kotlin {
         val commonMain by getting
         val commonTest by getting {
             dependencies {
-                implementation(kotlin("test"))
-                implementation("io.kotest:kotest-framework-engine:${ext["kotestVersion"]}")
-                implementation("io.kotest:kotest-assertions-core:${ext["kotestVersion"]}")
+                implementation(libs.kotest.frameworkEngine)
+                implementation(libs.kotest.frameworkDatatest)
+                implementation(libs.kotest.assertionsCore)
             }
         }
         val jvmMain by getting
         val jvmTest by getting {
             dependencies {
-                implementation("io.kotest:kotest-runner-junit5:${ext["kotestVersion"]}")
+                implementation(libs.kotest.runnerJunit5)
             }
         }
         val jsMain by getting
@@ -59,19 +56,3 @@ kotlin {
         val nativeTest by getting
     }
 }
-//
-//kover {
-////    isEnabled = true
-//    coverageEngine.set(JACOCO)
-//    jacocoEngineVersion.set("0.8.7")
-//    generateReportOnCheck.set(true)
-//}
-
-//extensions.configure<KoverMergedConfig> {
-//    enable()
-//    // configure merged tasks
-//}
-
-//koverMerged {
-//    enable()
-//}
