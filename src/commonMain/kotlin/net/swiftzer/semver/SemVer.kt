@@ -13,7 +13,7 @@ import kotlin.math.min
  * @property buildMetadata build metadata.
  */
 data class SemVer(
-    val major: Int = 0,
+    val major: Int,
     val minor: Int = 0,
     val patch: Int = 0,
     val preRelease: String? = null,
@@ -24,10 +24,11 @@ data class SemVer(
         require(major >= 0) { "Major version must be a positive number" }
         require(minor >= 0) { "Minor version must be a positive number" }
         require(patch >= 0) { "Patch version must be a positive number" }
-        if (preRelease != null) require(preReleasePattern matches preRelease) { "Pre-release version is not valid" }
-        if (buildMetadata != null) require(buildMetadataPattern matches buildMetadata) { "Build metadata is not valid" }
+        if (preRelease != null) require(PreReleasePattern matches preRelease) { "Pre-release version is not valid" }
+        if (buildMetadata != null) require(BuildMetadataPattern matches buildMetadata) { "Build metadata is not valid" }
     }
 
+    @Suppress("CyclomaticComplexMethod", "ReturnCount")
     override fun compareTo(other: SemVer): Int {
         if (major > other.major) return 1
         if (major < other.major) return -1
@@ -64,6 +65,8 @@ data class SemVer(
                     partLong.compareTo(otherPartLong)
                 } catch (_: NumberFormatException) {
                     // When part or otherPart doesn't fit in an Int, compare as String
+                    // It is not the standard way but because there are no proper BigDecimal class for Kotlin
+                    // Multiplatform we have to use this way
                     part.compareTo(otherPart)
                 }
             }
@@ -73,10 +76,12 @@ data class SemVer(
                 // parts is ended and otherParts is not ended
                 -1
             }
+
             parts.size > smallerSize && otherParts.size == smallerSize -> {
                 // parts is not ended and otherParts is ended
                 1
             }
+
             else -> 0
         }
     }
@@ -121,8 +126,9 @@ data class SemVer(
          * @throws IllegalArgumentException if the given string is not a valid version.
          */
         @JvmStatic
+        @Suppress("DestructuringDeclarationWithTooManyEntries")
         fun parse(version: String): SemVer {
-            val (major, minor, patch, preRelease, buildMetadata) = (fullPattern.matchEntire(version)
+            val (major, minor, patch, preRelease, buildMetadata) = (FullPattern.matchEntire(version)
                 ?: throw IllegalArgumentException("Invalid version string [$version]")).destructured
             return SemVer(
                 major = major.toInt(),
