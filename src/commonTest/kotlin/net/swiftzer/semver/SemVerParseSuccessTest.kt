@@ -159,5 +159,6 @@ class SemVerParseSuccessTest : FunSpec({
         )
     ) {
         SemVer.parse(it.version) shouldBe it.expected
+        SemVer.parseOrNull(it.version) shouldBe it.expected
     }
 })
