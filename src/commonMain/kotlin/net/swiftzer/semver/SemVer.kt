@@ -28,6 +28,39 @@ data class SemVer(
         if (buildMetadata != null) require(BuildMetadataPattern matches buildMetadata) { "Build metadata is not valid" }
     }
 
+    /**
+     * Create a new [SemVer] with the next major number. Minor and patch number become 0.
+     * Pre-release and build metadata information is not applied to the new version.
+     *
+     * @return next major version
+     * @throws NumberFormatException if the next major number exceed [Int] range.
+     */
+    fun nextMajor(): SemVer {
+        return SemVer(major = major + 1)
+    }
+
+    /**
+     * Create a new [SemVer] with the same major number and the next minor number. Patch number becomes 0.
+     * Pre-release and build metadata information is not applied to the new version.
+     *
+     * @return next minor version
+     * @throws NumberFormatException if the next minor number exceed [Int] range.
+     */
+    fun nextMinor(): SemVer {
+        return SemVer(major = major, minor = minor + 1)
+    }
+
+    /**
+     * Create a new [SemVer] with the same major and minor number and the next patch number.
+     * Pre-release and build metadata information is not applied to the new version.
+     *
+     * @return next patch version
+     * @throws NumberFormatException if the next patch number exceed [Int] range.
+     */
+    fun nextPatch(): SemVer {
+        return SemVer(major = major, minor = minor, patch = patch + 1)
+    }
+
     @Suppress("CyclomaticComplexMethod", "ReturnCount")
     override fun compareTo(other: SemVer): Int {
         if (major > other.major) return 1
@@ -64,7 +97,7 @@ data class SemVer(
                     val otherPartLong = otherPart.toLong()
                     partLong.compareTo(otherPartLong)
                 } catch (_: NumberFormatException) {
-                    // When part or otherPart doesn't fit in an Int, compare as String
+                    // When part or otherPart doesn't fit in an Long, compare as String
                     // It is not the standard way but because there are no proper BigDecimal class for Kotlin
                     // Multiplatform we have to use this way
                     part.compareTo(otherPart)
@@ -123,7 +156,9 @@ data class SemVer(
          * Parse the version string to [SemVer].
          *
          * @param version version string to be parsed.
+         * @return parsed [SemVer].
          * @throws IllegalArgumentException if the given string is not a valid version.
+         * @throws NumberFormatException if [major], [minor], [patch] values exceed [Int] range.
          */
         @JvmStatic
         @Suppress("DestructuringDeclarationWithTooManyEntries")
@@ -137,6 +172,19 @@ data class SemVer(
                 preRelease = preRelease.ifEmpty { null },
                 buildMetadata = buildMetadata.ifEmpty { null },
             )
+        }
+
+        /**
+         * Parse the version string to [SemVer].
+         *
+         * @param version version string to be parsed.
+         * @return parsed [SemVer] or null if it cannot be parsed.
+         */
+        @JvmStatic
+        fun parseOrNull(version: String): SemVer? = try {
+            parse(version = version)
+        } catch (_: IllegalArgumentException) {
+            null
         }
     }
 }

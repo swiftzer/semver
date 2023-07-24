@@ -6,6 +6,7 @@ import io.kotest.matchers.booleans.shouldBeFalse
 import io.kotest.matchers.booleans.shouldBeTrue
 import io.kotest.matchers.ints.shouldBeNegative
 import io.kotest.matchers.ints.shouldBePositive
+import io.kotest.matchers.nulls.shouldBeNull
 import io.kotest.matchers.shouldBe
 
 class SemVerTest : FunSpec({
@@ -62,6 +63,36 @@ class SemVerTest : FunSpec({
     test("isInitialDevelopmentPhase") {
         SemVer(0, 1, 2).isInitialDevelopmentPhase().shouldBeTrue()
         SemVer(1, 2, 3).isInitialDevelopmentPhase().shouldBeFalse()
+    }
+
+    test("nextMajor") {
+        SemVer(
+            major = 1,
+            minor = 3,
+            patch = 5,
+            preRelease = "prerelease",
+            buildMetadata = "meta"
+        ).nextMajor() shouldBe SemVer(major = 2, minor = 0, patch = 0)
+    }
+
+    test("nextMinor") {
+        SemVer(
+            major = 1,
+            minor = 3,
+            patch = 5,
+            preRelease = "prerelease",
+            buildMetadata = "meta"
+        ).nextMinor() shouldBe SemVer(major = 1, minor = 4, patch = 0)
+    }
+
+    test("nextPatch") {
+        SemVer(
+            major = 1,
+            minor = 3,
+            patch = 5,
+            preRelease = "prerelease",
+            buildMetadata = "meta"
+        ).nextPatch() shouldBe SemVer(major = 1, minor = 3, patch = 6)
     }
 
     test("toString") {
@@ -130,17 +161,22 @@ class SemVerTest : FunSpec({
         version6.compareTo(version6) shouldBe 0
     }
 
-    test("compare preRelease exceed long range") {
+    test("compare preRelease exceed Long range") {
         val smaller = SemVer(1, 0, 0, "111.99999999999999999999998")
         val larger = SemVer(1, 0, 0, "111.99999999999999999999999")
         smaller.compareTo(larger).shouldBeNegative()
         larger.compareTo(smaller).shouldBePositive()
     }
 
-    test("parse exceed long range") {
+    test("parse exceed Int range") {
         // The type for major/minor/patch are Long, thus throw exception
         shouldThrow<NumberFormatException> {
             SemVer.parse("99999999999999999999999.999999999999999999.99999999999999999")
         }
+    }
+
+    test("parseOrNull exceed Int range") {
+        // The type for major/minor/patch are Long, thus throw exception
+        SemVer.parseOrNull("99999999999999999999999.999999999999999999.99999999999999999").shouldBeNull()
     }
 })
