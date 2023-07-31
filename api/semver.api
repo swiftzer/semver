@@ -1,0 +1,44 @@
+public final class net/swiftzer/semver/SemVer : java/lang/Comparable {
+	public static final field Companion Lnet/swiftzer/semver/SemVer$Companion;
+	public fun <init> (IIILjava/lang/String;Ljava/lang/String;)V
+	public synthetic fun <init> (IIILjava/lang/String;Ljava/lang/String;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public synthetic fun compareTo (Ljava/lang/Object;)I
+	public fun compareTo (Lnet/swiftzer/semver/SemVer;)I
+	public final fun component1 ()I
+	public final fun component2 ()I
+	public final fun component3 ()I
+	public final fun component4 ()Ljava/lang/String;
+	public final fun component5 ()Ljava/lang/String;
+	public final fun copy (IIILjava/lang/String;Ljava/lang/String;)Lnet/swiftzer/semver/SemVer;
+	public static synthetic fun copy$default (Lnet/swiftzer/semver/SemVer;IIILjava/lang/String;Ljava/lang/String;ILjava/lang/Object;)Lnet/swiftzer/semver/SemVer;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getBuildMetadata ()Ljava/lang/String;
+	public final fun getMajor ()I
+	public final fun getMinor ()I
+	public final fun getPatch ()I
+	public final fun getPreRelease ()Ljava/lang/String;
+	public fun hashCode ()I
+	public final fun isInitialDevelopmentPhase ()Z
+	public final fun nextMajor ()Lnet/swiftzer/semver/SemVer;
+	public final fun nextMinor ()Lnet/swiftzer/semver/SemVer;
+	public final fun nextPatch ()Lnet/swiftzer/semver/SemVer;
+	public static final fun parse (Ljava/lang/String;)Lnet/swiftzer/semver/SemVer;
+	public static final fun parseOrNull (Ljava/lang/String;)Lnet/swiftzer/semver/SemVer;
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class net/swiftzer/semver/SemVer$Companion {
+	public final fun parse (Ljava/lang/String;)Lnet/swiftzer/semver/SemVer;
+	public final fun parseOrNull (Ljava/lang/String;)Lnet/swiftzer/semver/SemVer;
+	public final fun serializer ()Lkotlinx/serialization/KSerializer;
+}
+
+public final class net/swiftzer/semver/SemVerSerializer : kotlinx/serialization/KSerializer {
+	public static final field INSTANCE Lnet/swiftzer/semver/SemVerSerializer;
+	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
+	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lnet/swiftzer/semver/SemVer;
+	public fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
+	public fun serialize (Lkotlinx/serialization/encoding/Encoder;Lnet/swiftzer/semver/SemVer;)V
+}
+
