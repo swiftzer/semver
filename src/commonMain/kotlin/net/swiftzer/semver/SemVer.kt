@@ -1,5 +1,6 @@
 package net.swiftzer.semver
 
+import kotlinx.serialization.Serializable
 import kotlin.jvm.JvmStatic
 import kotlin.math.min
 
@@ -12,6 +13,7 @@ import kotlin.math.min
  * @property preRelease pre-release version.
  * @property buildMetadata build metadata.
  */
+@Serializable(with = SemVerSerializer::class)
 data class SemVer(
     val major: Int,
     val minor: Int = 0,
