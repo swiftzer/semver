@@ -1,6 +1,7 @@
 plugins {
     alias(libs.plugins.kotlin.multiplatform)
     alias(libs.plugins.kotest.multiplatform)
+    alias(libs.plugins.kotlinx.serialization)
     alias(libs.plugins.dokka)
     alias(libs.plugins.kover)
     alias(libs.plugins.detekt)
@@ -36,12 +37,17 @@ kotlin {
     }
 
     sourceSets {
-        val commonMain by getting
+        val commonMain by getting {
+            dependencies {
+                implementation(libs.kotlinx.serialization.core)
+            }
+        }
         val commonTest by getting {
             dependencies {
                 implementation(libs.kotest.frameworkEngine)
                 implementation(libs.kotest.frameworkDatatest)
                 implementation(libs.kotest.assertionsCore)
+                implementation(libs.kotlinx.serialization.json)
             }
         }
         val jvmMain by getting

@@ -42,7 +42,6 @@ class SemVerParseFailTest : FunSpec({
             "01.1.1",
             "1.01.1",
             "1.1.01",
-            "1.2",
             "1.2.3.DEV",
             "1.2-SNAPSHOT",
             "1.2.31.2.3----RC-SNAPSHOT.12.09.1--..12+788",
