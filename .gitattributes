@@ -6,3 +6,4 @@ gradlew eol=lf
 *.yaml eol=lf
 *.toml eol=lf
 *.md eol=lf
+*.api eol=lf
