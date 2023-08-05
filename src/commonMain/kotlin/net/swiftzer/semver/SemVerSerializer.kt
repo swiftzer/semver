@@ -8,7 +8,7 @@ import kotlinx.serialization.descriptors.SerialDescriptor
 import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
 
-object SemVerSerializer : KSerializer<SemVer> {
+public object SemVerSerializer : KSerializer<SemVer> {
     override val descriptor: SerialDescriptor = PrimitiveSerialDescriptor(
         serialName = "SemVer",
         kind = PrimitiveKind.STRING

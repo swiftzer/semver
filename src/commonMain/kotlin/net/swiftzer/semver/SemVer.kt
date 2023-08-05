@@ -14,7 +14,7 @@ import kotlin.math.min
  * @property buildMetadata build metadata.
  */
 @Serializable(with = SemVerSerializer::class)
-data class SemVer(
+public data class SemVer(
     val major: Int,
     val minor: Int = 0,
     val patch: Int = 0,
@@ -37,7 +37,7 @@ data class SemVer(
      * @return next major version
      * @throws NumberFormatException if the next major number exceed [Int] range.
      */
-    fun nextMajor(): SemVer {
+    public fun nextMajor(): SemVer {
         return SemVer(major = major + 1)
     }
 
@@ -48,7 +48,7 @@ data class SemVer(
      * @return next minor version
      * @throws NumberFormatException if the next minor number exceed [Int] range.
      */
-    fun nextMinor(): SemVer {
+    public fun nextMinor(): SemVer {
         return SemVer(major = major, minor = minor + 1)
     }
 
@@ -59,7 +59,7 @@ data class SemVer(
      * @return next patch version
      * @throws NumberFormatException if the next patch number exceed [Int] range.
      */
-    fun nextPatch(): SemVer {
+    public fun nextPatch(): SemVer {
         return SemVer(major = major, minor = minor, patch = patch + 1)
     }
 
@@ -126,7 +126,7 @@ data class SemVer(
      *
      * @return true if it is in initial development.
      */
-    fun isInitialDevelopmentPhase(): Boolean = major == 0
+    public fun isInitialDevelopmentPhase(): Boolean = major == 0
 
     /**
      * Build the version name string.
@@ -151,7 +151,7 @@ data class SemVer(
 
     private fun String.isNumeric(): Boolean = numericPattern.matches(this)
 
-    companion object {
+    public companion object {
         private val numericPattern = Regex("""\d+""")
 
         /**
@@ -164,7 +164,7 @@ data class SemVer(
          */
         @JvmStatic
         @Suppress("DestructuringDeclarationWithTooManyEntries")
-        fun parse(version: String): SemVer {
+        public fun parse(version: String): SemVer {
             val (major, minor, patch, preRelease, buildMetadata) = (FullPattern.matchEntire(version)
                 ?: throw IllegalArgumentException("Invalid version string [$version]")).destructured
             return SemVer(
@@ -183,7 +183,7 @@ data class SemVer(
          * @return parsed [SemVer] or null if it cannot be parsed.
          */
         @JvmStatic
-        fun parseOrNull(version: String): SemVer? = try {
+        public fun parseOrNull(version: String): SemVer? = try {
             parse(version = version)
         } catch (_: IllegalArgumentException) {
             null
