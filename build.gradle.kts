@@ -16,6 +16,7 @@ repositories {
 }
 
 kotlin {
+    explicitApi()
     jvm {
         compilations.all {
             kotlinOptions.jvmTarget = "1.8"
