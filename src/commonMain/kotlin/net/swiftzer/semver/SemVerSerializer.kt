@@ -22,7 +22,5 @@ public object SemVerSerializer : KSerializer<SemVer> {
         SemVer.parse(decoder.decodeString())
     } catch (e: IllegalArgumentException) {
         throw SerializationException(e)
-    } catch (e: NumberFormatException) {
-        throw SerializationException(e)
     }
 }
