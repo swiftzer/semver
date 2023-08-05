@@ -1,3 +1,6 @@
+import org.jetbrains.dokka.gradle.DokkaTask
+import java.net.URL
+
 plugins {
     alias(libs.plugins.kotlin.multiplatform)
     alias(libs.plugins.kotest.multiplatform)
@@ -64,6 +67,19 @@ kotlin {
         val jsTest by getting
         val nativeMain by getting
         val nativeTest by getting
+    }
+}
+
+tasks.withType<DokkaTask>().configureEach {
+    dokkaSourceSets {
+        configureEach {
+            sourceLink {
+                val relPath = rootProject.projectDir.toPath().relativize(projectDir.toPath())
+                localDirectory.set(projectDir.resolve("src"))
+                remoteUrl.set(URL("https://github.com/swiftzer/semver/tree/multiplatform/${relPath}/src"))
+                remoteLineSuffix.set("#L")
+            }
+        }
     }
 }
 
