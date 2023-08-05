@@ -6,10 +6,12 @@ plugins {
     alias(libs.plugins.dokka)
     alias(libs.plugins.kover)
     alias(libs.plugins.detekt)
+    id("maven-publish")
+    id("signing")
 }
 
 group = "net.swiftzer.semver"
-version = "2.0.0"
+version = "2.0.0-SNAPSHOT"
 
 repositories {
     mavenCentral()
@@ -62,5 +64,75 @@ kotlin {
         val jsTest by getting
         val nativeMain by getting
         val nativeTest by getting
+    }
+}
+
+extensions.configure<PublishingExtension> {
+    repositories {
+        maven {
+            val isSnapshot = version.toString().endsWith("SNAPSHOT")
+            url = uri(
+                if (isSnapshot) {
+                    "https://oss.sonatype.org/content/repositories/snapshots"
+                } else {
+                    "https://oss.sonatype.org/service/local/staging/deploy/maven2"
+                }
+            )
+            credentials {
+                username = providers.gradleProperty("ossrhUsername").get()
+                password = providers.gradleProperty("ossrhPassword").get()
+            }
+        }
+
+        val javadocJar = tasks.register<Jar>("javadocJar") {
+            dependsOn(tasks.dokkaHtml)
+            archiveClassifier.set("javadoc")
+            from("$buildDir/dokka")
+        }
+
+        publications {
+            withType<MavenPublication> {
+                artifact(javadocJar)
+                pom {
+                    name.set("SemVer")
+                    description.set("Kotlin data class for Semantic Versioning 2.0.0")
+                    licenses {
+                        license {
+                            name.set("MIT License")
+                            url.set("https://opensource.org/licenses/mit-license.php")
+                        }
+                    }
+                    url.set("https://github.com/swiftzer/semver")
+                    issueManagement {
+                        system.set("GitHub")
+                        url.set("https://github.com/swiftzer/semver/issues")
+                    }
+                    scm {
+                        connection.set("scm:git:github.com/swiftzer/semver.git")
+                        developerConnection.set("scm:git:ssh://github.com/swiftzer/semver.git")
+                        url.set("https://github.com/swiftzer/semver/tree/main")
+                    }
+                    developers {
+                        developer {
+                            id.set("ericksli")
+                            name.set("Eric Li")
+                            email.set("eric@swiftzer.net")
+                        }
+                    }
+                }
+            }
+        }
+
+        val publishing = extensions.getByType<PublishingExtension>()
+        extensions.configure<SigningExtension> {
+            useInMemoryPgpKeys(
+                providers.gradleProperty("signingKey").get(),
+                providers.gradleProperty("signingPassword").get(),
+            )
+            sign(publishing.publications)
+        }
+        project.tasks.withType(AbstractPublishToMaven::class.java).configureEach {
+            dependsOn(project.tasks.withType(Sign::class.java))
+        }
     }
 }
