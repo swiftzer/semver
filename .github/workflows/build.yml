@@ -1,0 +1,39 @@
+name: Build
+
+on:
+  push:
+    branches:
+      - main
+      - multiplatform
+  pull_request:
+    branches:
+      - main
+
+env:
+  GRADLE_OPTS: -Dorg.gradle.daemon=false -DossrhUsername=${{ secrets.OSSRH_USERNAME }} -DossrhPassword=${{ secrets.OSSRH_PASSWORD }} -DsigningKey=${{ secrets.SIGNING_KEY }} -DsigningPassword=${{ secrets.SIGNING_PASSWORD }}
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Setup JDK
+        uses: actions/setup-java@v3
+        with:
+          distribution: microsoft
+          java-version: '17'
+
+      - name: Setup Gradle
+        uses: gradle/gradle-build-action@v2
+        with:
+          dependency-graph: generate-and-submit
+
+      - name: Detekt
+        run: ./gradlew detektJsMain detektJsTest detektJvmMain detektJsTest detektMetadataCommonMain detektMetadataMain detektNativeMain detektNativeTest
+
+      - name: Kotlin binary compatibility validator
+        run: ./gradlew apiCheck
+
+      - name: Unit tests
+        run: ./gradlew allTests
