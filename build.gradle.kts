@@ -9,16 +9,12 @@ plugins {
     alias(libs.plugins.dokka)
     alias(libs.plugins.kover)
     alias(libs.plugins.detekt)
-    id("maven-publish")
-    id("signing")
+    `maven-publish`
+    signing
 }
 
 group = "net.swiftzer.semver"
 version = "2.0.0-SNAPSHOT"
-
-repositories {
-    mavenCentral()
-}
 
 kotlin {
     explicitApi()
@@ -71,19 +67,17 @@ kotlin {
 }
 
 tasks.withType<DokkaTask>().configureEach {
-    dokkaSourceSets {
-        configureEach {
-            sourceLink {
-                val relPath = rootProject.projectDir.toPath().relativize(projectDir.toPath())
-                localDirectory.set(projectDir.resolve("src"))
-                remoteUrl.set(URL("https://github.com/swiftzer/semver/tree/multiplatform/${relPath}/src"))
-                remoteLineSuffix.set("#L")
-            }
+    dokkaSourceSets.configureEach {
+        sourceLink {
+            val relPath = rootProject.projectDir.toPath().relativize(projectDir.toPath())
+            localDirectory = projectDir.resolve("src")
+            remoteUrl = URL("https://github.com/swiftzer/semver/tree/multiplatform/${relPath}/src")
+            remoteLineSuffix = "#L"
         }
     }
 }
 
-extensions.configure<PublishingExtension> {
+publishing {
     repositories {
         maven {
             val isSnapshot = version.toString().endsWith("SNAPSHOT")
@@ -95,60 +89,59 @@ extensions.configure<PublishingExtension> {
                 }
             )
             credentials {
-                username = providers.gradleProperty("ossrhUsername").get()
-                password = providers.gradleProperty("ossrhPassword").get()
+                username = providers.gradleProperty("ossrhUsername").orNull
+                password = providers.gradleProperty("ossrhPassword").orNull
             }
         }
 
         val javadocJar = tasks.register<Jar>("javadocJar") {
             dependsOn(tasks.dokkaHtml)
-            archiveClassifier.set("javadoc")
-            from("$buildDir/dokka")
+            archiveClassifier = "javadoc"
+            from(layout.buildDirectory.file("dokka"))
         }
 
         publications {
             withType<MavenPublication> {
                 artifact(javadocJar)
                 pom {
-                    name.set("SemVer")
-                    description.set("Kotlin data class for Semantic Versioning 2.0.0")
+                    name = "SemVer"
+                    description = "Kotlin data class for Semantic Versioning 2.0.0"
                     licenses {
                         license {
-                            name.set("MIT License")
-                            url.set("https://opensource.org/licenses/mit-license.php")
+                            name = "MIT License"
+                            url = "https://opensource.org/licenses/mit-license.php"
                         }
                     }
-                    url.set("https://github.com/swiftzer/semver")
+                    url = "https://github.com/swiftzer/semver"
                     issueManagement {
-                        system.set("GitHub")
-                        url.set("https://github.com/swiftzer/semver/issues")
+                        system = "GitHub"
+                        url = "https://github.com/swiftzer/semver/issues"
                     }
                     scm {
-                        connection.set("scm:git:github.com/swiftzer/semver.git")
-                        developerConnection.set("scm:git:ssh://github.com/swiftzer/semver.git")
-                        url.set("https://github.com/swiftzer/semver/tree/main")
+                        connection = "scm:git:github.com/swiftzer/semver.git"
+                        developerConnection = "scm:git:ssh://github.com/swiftzer/semver.git"
+                        url = "https://github.com/swiftzer/semver/tree/main"
                     }
                     developers {
                         developer {
-                            id.set("ericksli")
-                            name.set("Eric Li")
-                            email.set("eric@swiftzer.net")
+                            id = "ericksli"
+                            name = "Eric Li"
+                            email = "eric@swiftzer.net"
                         }
                     }
                 }
             }
         }
 
-        val publishing = extensions.getByType<PublishingExtension>()
-        extensions.configure<SigningExtension> {
+        signing {
             useInMemoryPgpKeys(
-                providers.gradleProperty("signingKey").get(),
-                providers.gradleProperty("signingPassword").get(),
+                providers.gradleProperty("signingKey").orNull,
+                providers.gradleProperty("signingPassword").orNull,
             )
             sign(publishing.publications)
         }
-        project.tasks.withType(AbstractPublishToMaven::class.java).configureEach {
-            dependsOn(project.tasks.withType(Sign::class.java))
+        project.tasks.withType<AbstractPublishToMaven>().configureEach {
+            dependsOn(project.tasks.withType<Sign>())
         }
     }
 }
