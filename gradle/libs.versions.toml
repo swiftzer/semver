@@ -1,6 +1,6 @@
 [versions]
 detekt = "1.23.4"
-dokka = "1.8.20"
+dokka = "1.9.10"
 kotest = "5.8.0"
 kotlin = "1.9.0"
 kotlinxBinaryCompatibilityValidator = "0.13.2"
