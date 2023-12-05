@@ -4,7 +4,7 @@ dokka = "1.9.10"
 kotest = "5.8.0"
 kotlin = "1.9.21"
 kotlinxBinaryCompatibilityValidator = "0.13.2"
-kotlinxSerialization = "1.5.1"
+kotlinxSerialization = "1.6.2"
 kover = "0.7.5"
 
 [libraries]
