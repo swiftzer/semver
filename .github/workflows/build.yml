@@ -6,8 +6,7 @@ on:
       - main
       - multiplatform
   pull_request:
-    branches:
-      - main
+  workflow_dispatch:
 
 env:
   GRADLE_OPTS: -Dorg.gradle.daemon=false -DossrhUsername=${{ secrets.OSSRH_USERNAME }} -DossrhPassword=${{ secrets.OSSRH_PASSWORD }} -DsigningKey=${{ secrets.SIGNING_KEY }} -DsigningPassword=${{ secrets.SIGNING_PASSWORD }}
@@ -16,10 +15,10 @@ jobs:
   check:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
       - name: Setup JDK
-        uses: actions/setup-java@v3
+        uses: actions/setup-java@v4
         with:
           distribution: microsoft
           java-version: '17'
