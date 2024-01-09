@@ -30,39 +30,49 @@ kotlin {
         browser()
         nodejs()
     }
-    val hostOs = System.getProperty("os.name")
-    val isMingwX64 = hostOs.startsWith("Windows")
-    val nativeTarget = when {
-        hostOs == "Mac OS X" -> macosX64("native")
-        hostOs == "Linux" -> linuxX64("native")
-        isMingwX64 -> mingwX64("native")
-        else -> throw GradleException("Host OS is not supported in Kotlin/Native.")
-    }
+
+    mingwX64()
+
+    linuxX64()
+    linuxArm64()
+
+    macosX64()
+    macosArm64()
+
+    iosArm64()
+    iosX64()
+    iosSimulatorArm64()
+
+    watchosX64()
+    watchosArm32()
+    watchosArm64()
+    watchosSimulatorArm64()
+
+    tvosX64()
+    tvosArm64()
+    tvosSimulatorArm64()
+
+    watchosX64()
+    watchosArm32()
+    watchosArm64()
+    watchosSimulatorArm64()
+    watchosDeviceArm64()
+
+    applyDefaultHierarchyTemplate()
 
     sourceSets {
-        val commonMain by getting {
-            dependencies {
-                implementation(libs.kotlinx.serialization.core)
-            }
+        commonMain.dependencies {
+            implementation(libs.kotlinx.serialization.core)
         }
-        val commonTest by getting {
-            dependencies {
-                implementation(libs.kotest.frameworkEngine)
-                implementation(libs.kotest.frameworkDatatest)
-                implementation(libs.kotest.assertionsCore)
-                implementation(libs.kotlinx.serialization.json)
-            }
+        commonTest.dependencies {
+            implementation(libs.kotest.frameworkEngine)
+            implementation(libs.kotest.frameworkDatatest)
+            implementation(libs.kotest.assertionsCore)
+            implementation(libs.kotlinx.serialization.json)
         }
-        val jvmMain by getting
-        val jvmTest by getting {
-            dependencies {
-                implementation(libs.kotest.runnerJunit5)
-            }
+        jvmTest.dependencies {
+            implementation(libs.kotest.runnerJunit5)
         }
-        val jsMain by getting
-        val jsTest by getting
-        val nativeMain by getting
-        val nativeTest by getting
     }
 }
 
