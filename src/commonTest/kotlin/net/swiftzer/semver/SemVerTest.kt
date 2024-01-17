@@ -48,9 +48,8 @@ class SemVerTest : FunSpec({
         SemVer(major = 0, buildMetadata = "meta-valid").buildMetadata shouldBe "meta-valid"
         SemVer(major = 0, buildMetadata = "0").buildMetadata shouldBe "0"
         SemVer(major = 0, buildMetadata = "1").buildMetadata shouldBe "1"
-        SemVer(
-            major = 0, buildMetadata = "0.build.1-rc.10000aaa-kk-0.1"
-        ).buildMetadata shouldBe "0.build.1-rc.10000aaa-kk-0.1"
+        SemVer(major = 0, buildMetadata = "0.build.1-rc.10000aaa-kk-0.1")
+            .buildMetadata shouldBe "0.build.1-rc.10000aaa-kk-0.1"
         SemVer(major = 0, buildMetadata = "--a1b2C3").buildMetadata shouldBe "--a1b2C3"
         shouldThrow<IllegalArgumentException> { SemVer(major = 0, buildMetadata = " ") }
         shouldThrow<IllegalArgumentException> { SemVer(major = 0, buildMetadata = "a!bc") }
@@ -71,7 +70,7 @@ class SemVerTest : FunSpec({
             minor = 3,
             patch = 5,
             preRelease = "prerelease",
-            buildMetadata = "meta"
+            buildMetadata = "meta",
         ).nextMajor() shouldBe SemVer(major = 2, minor = 0, patch = 0)
     }
 
@@ -81,7 +80,7 @@ class SemVerTest : FunSpec({
             minor = 3,
             patch = 5,
             preRelease = "prerelease",
-            buildMetadata = "meta"
+            buildMetadata = "meta",
         ).nextMinor() shouldBe SemVer(major = 1, minor = 4, patch = 0)
     }
 
@@ -91,7 +90,7 @@ class SemVerTest : FunSpec({
             minor = 3,
             patch = 5,
             preRelease = "prerelease",
-            buildMetadata = "meta"
+            buildMetadata = "meta",
         ).nextPatch() shouldBe SemVer(major = 1, minor = 3, patch = 6)
     }
 
@@ -99,10 +98,18 @@ class SemVerTest : FunSpec({
         SemVer(major = 0, minor = 11, patch = 222).toString() shouldBe "0.11.222"
         SemVer(major = 1, minor = 0, patch = 0, preRelease = "alpha.1").toString() shouldBe "1.0.0-alpha.1"
         SemVer(
-            major = 1, minor = 1, patch = 2, preRelease = null, buildMetadata = "meta-valid"
+            major = 1,
+            minor = 1,
+            patch = 2,
+            preRelease = null,
+            buildMetadata = "meta-valid",
         ).toString() shouldBe "1.1.2+meta-valid"
         SemVer(
-            major = 2, minor = 0, patch = 0, preRelease = "rc.1", buildMetadata = "build.123"
+            major = 2,
+            minor = 0,
+            patch = 0,
+            preRelease = "rc.1",
+            buildMetadata = "build.123",
         ).toString() shouldBe "2.0.0-rc.1+build.123"
     }
 

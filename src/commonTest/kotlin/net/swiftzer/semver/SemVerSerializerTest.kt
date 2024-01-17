@@ -32,7 +32,7 @@ class SemVerSerializerTest : FunSpec({
                     buildMetadata = "build.123",
                 ),
                 number = 12345,
-            )
+            ),
         ) shouldBe """{"semVer":"2.0.0-rc.1+build.123","number":12345}"""
     }
 

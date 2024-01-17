@@ -71,7 +71,7 @@ class SemVerParseSuccessTest : FunSpec({
                     minor = 0,
                     patch = 0,
                     preRelease = "alpha-a.b-c-somethinglong",
-                    buildMetadata = "build.1-aef.1-its-okay"
+                    buildMetadata = "build.1-aef.1-its-okay",
                 ),
             ),
             Param(
@@ -125,7 +125,7 @@ class SemVerParseSuccessTest : FunSpec({
                     minor = 2,
                     patch = 3,
                     preRelease = "---RC-SNAPSHOT.12.9.1--.12",
-                    buildMetadata = "788"
+                    buildMetadata = "788",
                 ),
             ),
             Param(
@@ -135,7 +135,7 @@ class SemVerParseSuccessTest : FunSpec({
                     minor = 2,
                     patch = 3,
                     preRelease = "---R-S.12.9.1--.12",
-                    buildMetadata = "meta"
+                    buildMetadata = "meta",
                 ),
             ),
             Param(
@@ -149,14 +149,14 @@ class SemVerParseSuccessTest : FunSpec({
                     minor = 0,
                     patch = 0,
                     preRelease = null,
-                    buildMetadata = "0.build.1-rc.10000aaa-kk-0.1"
+                    buildMetadata = "0.build.1-rc.10000aaa-kk-0.1",
                 ),
             ),
             Param(
                 version = "1.0.0-0A.is.legal",
                 expected = SemVer(major = 1, minor = 0, patch = 0, preRelease = "0A.is.legal"),
             ),
-        )
+        ),
     ) {
         SemVer.parse(it.version) shouldBe it.expected
         SemVer.parseOrNull(it.version) shouldBe it.expected

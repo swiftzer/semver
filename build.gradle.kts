@@ -1,5 +1,5 @@
-import org.jetbrains.dokka.gradle.DokkaTask
 import java.net.URL
+import org.jetbrains.dokka.gradle.DokkaTask
 
 plugins {
     alias(libs.plugins.kotlin.multiplatform)
@@ -9,6 +9,7 @@ plugins {
     alias(libs.plugins.dokka)
     alias(libs.plugins.kover)
     alias(libs.plugins.detekt)
+    alias(libs.plugins.spotless)
     `maven-publish`
     signing
 }
@@ -81,7 +82,7 @@ tasks.withType<DokkaTask>().configureEach {
         sourceLink {
             val relPath = rootProject.projectDir.toPath().relativize(projectDir.toPath())
             localDirectory = projectDir.resolve("src")
-            remoteUrl = URL("https://github.com/swiftzer/semver/tree/multiplatform/${relPath}/src")
+            remoteUrl = URL("https://github.com/swiftzer/semver/tree/multiplatform/$relPath/src")
             remoteLineSuffix = "#L"
         }
     }
@@ -96,7 +97,7 @@ publishing {
                     "https://oss.sonatype.org/content/repositories/snapshots"
                 } else {
                     "https://oss.sonatype.org/service/local/staging/deploy/maven2"
-                }
+                },
             )
             credentials {
                 username = providers.gradleProperty("ossrhUsername").orNull
@@ -153,5 +154,15 @@ publishing {
         project.tasks.withType<AbstractPublishToMaven>().configureEach {
             dependsOn(project.tasks.withType<Sign>())
         }
+    }
+}
+
+spotless {
+    kotlin {
+        ktlint(libs.ktlint.get().version)
+        target("**/src/**/*.kt")
+    }
+    kotlinGradle {
+        ktlint(libs.ktlint.get().version)
     }
 }

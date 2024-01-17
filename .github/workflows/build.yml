@@ -28,6 +28,9 @@ jobs:
         with:
           dependency-graph: generate-and-submit
 
+      - name: Check style
+        run: ./gradlew spotlessCheck
+
       - name: Detekt
         run: ./gradlew detekt
 

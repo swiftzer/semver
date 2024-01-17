@@ -1,8 +1,8 @@
 package net.swiftzer.semver
 
-import kotlinx.serialization.Serializable
 import kotlin.jvm.JvmStatic
 import kotlin.math.min
+import kotlinx.serialization.Serializable
 
 /**
  * Version number in [Semantic Versioning 2.0.0](http://semver.org/spec/v2.0.0.html) specification (SemVer).
@@ -165,8 +165,10 @@ public data class SemVer(
         @JvmStatic
         @Suppress("DestructuringDeclarationWithTooManyEntries")
         public fun parse(version: String): SemVer {
-            val (major, minor, patch, preRelease, buildMetadata) = (FullPattern.matchEntire(version)
-                ?: throw IllegalArgumentException("Invalid version string [$version]")).destructured
+            val (major, minor, patch, preRelease, buildMetadata) = (
+                FullPattern.matchEntire(version)
+                    ?: throw IllegalArgumentException("Invalid version string [$version]")
+                ).destructured
             return SemVer(
                 major = major.toInt(),
                 minor = minor.toInt(),
