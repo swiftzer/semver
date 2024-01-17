@@ -11,7 +11,7 @@ import kotlinx.serialization.encoding.Encoder
 public object SemVerSerializer : KSerializer<SemVer> {
     override val descriptor: SerialDescriptor = PrimitiveSerialDescriptor(
         serialName = "SemVer",
-        kind = PrimitiveKind.STRING
+        kind = PrimitiveKind.STRING,
     )
 
     override fun serialize(encoder: Encoder, value: SemVer) {

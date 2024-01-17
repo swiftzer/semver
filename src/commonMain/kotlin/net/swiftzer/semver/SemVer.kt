@@ -1,8 +1,8 @@
 package net.swiftzer.semver
 
-import kotlinx.serialization.Serializable
 import kotlin.jvm.JvmStatic
 import kotlin.math.min
+import kotlinx.serialization.Serializable
 
 /**
  * Version number in [Semantic Versioning 2.0.0](http://semver.org/spec/v2.0.0.html) specification (SemVer).

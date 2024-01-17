@@ -1,8 +1,8 @@
 import io.gitlab.arturbosch.detekt.Detekt
-import org.jetbrains.dokka.gradle.DokkaTask
 import java.io.FileInputStream
 import java.net.URL
 import java.util.Properties
+import org.jetbrains.dokka.gradle.DokkaTask
 
 plugins {
     alias(libs.plugins.kotlin.multiplatform)
@@ -12,6 +12,7 @@ plugins {
     alias(libs.plugins.dokka)
     alias(libs.plugins.kover)
     alias(libs.plugins.detekt)
+    alias(libs.plugins.spotless)
     `maven-publish`
     signing
 }
@@ -183,3 +184,13 @@ tasks.register("detektAll") {
 
 fun getProperty(propertyName: String): String? =
     providers.environmentVariable(propertyName).orNull ?: publishingProperties.getProperty(propertyName)
+
+spotless {
+    kotlin {
+        ktlint(libs.ktlint.get().version)
+        target("**/src/**/*.kt")
+    }
+    kotlinGradle {
+        ktlint(libs.ktlint.get().version)
+    }
+}

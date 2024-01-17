@@ -14,6 +14,7 @@ kotest-frameworkEngine = { module = "io.kotest:kotest-framework-engine", version
 kotest-runnerJunit5 = { module = "io.kotest:kotest-runner-junit5", version.ref = "kotest" }
 kotlinx-serialization-core = { module = "org.jetbrains.kotlinx:kotlinx-serialization-core", version.ref = "kotlinxSerialization" }
 kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "kotlinxSerialization" }
+ktlint = "com.pinterest.ktlint:ktlint-cli:1.2.1"
 
 [plugins]
 detekt = { id = "io.gitlab.arturbosch.detekt", version.ref = "detekt" }
@@ -23,3 +24,4 @@ kotlin-multiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref 
 kotlinx-binaryCompatibilityValidator = { id = "org.jetbrains.kotlinx.binary-compatibility-validator", version.ref = "kotlinxBinaryCompatibilityValidator" }
 kotlinx-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
 kover = { id = "org.jetbrains.kotlinx.kover", version.ref = "kover" }
+spotless = "com.diffplug.spotless:6.25.0"
