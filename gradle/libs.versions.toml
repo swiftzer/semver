@@ -8,12 +8,12 @@ kotlinxSerialization = "1.6.2"
 kover = "0.7.5"
 
 [libraries]
-kotest-assertionsCore = { group = "io.kotest", name = "kotest-assertions-core", version.ref = "kotest" }
-kotest-frameworkDatatest = { group = "io.kotest", name = "kotest-framework-datatest", version.ref = "kotest" }
-kotest-frameworkEngine = { group = "io.kotest", name = "kotest-framework-engine", version.ref = "kotest" }
-kotest-runnerJunit5 = { group = "io.kotest", name = "kotest-runner-junit5", version.ref = "kotest" }
-kotlinx-serialization-core = { group = "org.jetbrains.kotlinx", name = "kotlinx-serialization-core", version.ref = "kotlinxSerialization" }
-kotlinx-serialization-json = { group = "org.jetbrains.kotlinx", name = "kotlinx-serialization-json", version.ref = "kotlinxSerialization" }
+kotest-assertionsCore = { module = "io.kotest:kotest-assertions-core", version.ref = "kotest" }
+kotest-frameworkDatatest = { module = "io.kotest:kotest-framework-datatest", version.ref = "kotest" }
+kotest-frameworkEngine = { module = "io.kotest:kotest-framework-engine", version.ref = "kotest" }
+kotest-runnerJunit5 = { module = "io.kotest:kotest-runner-junit5", version.ref = "kotest" }
+kotlinx-serialization-core = { module = "org.jetbrains.kotlinx:kotlinx-serialization-core", version.ref = "kotlinxSerialization" }
+kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "kotlinxSerialization" }
 
 [plugins]
 detekt = { id = "io.gitlab.arturbosch.detekt", version.ref = "detekt" }
