@@ -1,3 +1,4 @@
+import io.gitlab.arturbosch.detekt.Detekt
 import org.jetbrains.dokka.gradle.DokkaTask
 import java.net.URL
 
@@ -154,4 +155,8 @@ publishing {
             dependsOn(project.tasks.withType<Sign>())
         }
     }
+}
+
+tasks.register("detektAll") {
+    dependsOn(tasks.withType<Detekt>())
 }

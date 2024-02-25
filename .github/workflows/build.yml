@@ -29,7 +29,7 @@ jobs:
           dependency-graph: generate-and-submit
 
       - name: Detekt
-        run: ./gradlew detekt
+        run: ./gradlew detektAll
 
       - name: Kotlin binary compatibility validator
         run: ./gradlew apiCheck
