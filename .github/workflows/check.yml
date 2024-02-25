@@ -1,0 +1,75 @@
+name: Check
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+  merge_group:
+  workflow_dispatch:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - uses: ./.github/workflows/setup-gradle
+
+      - name: Kotlin binary compatibility validator
+        run: ./gradlew apiCheck
+
+      - name: Detekt
+        run: ./gradlew detektAll
+
+  test:
+    strategy:
+      matrix:
+        config: [
+          { os: ubuntu-latest, tasks: jvmTest jsTest linuxX64Test },
+          { os: windows-latest, tasks: mingwX64Test },
+          { os: macos-latest, tasks: iosSimulatorArm64Test iosX64Test macosArm64Test macosX64Test tvosSimulatorArm64Test tvosX64Test watchosSimulatorArm64Test watchosX64Test },
+        ]
+    name: test (${{ matrix.config.os }})
+    runs-on: ${{ matrix.config.os }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - uses: ./.github/workflows/setup-gradle
+
+      - name: Unit test on ${{ matrix.config.os }}
+        run: ./gradlew ${{ matrix.config.tasks }}
+
+      - name: Upload test reports
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-reports
+          path: '**/build/reports/tests'
+          retention-days: 7
+
+  coverage:
+    runs-on: ubuntu-latest
+    needs: [ test ]
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - uses: ./.github/workflows/setup-gradle
+
+      - name: Kover
+        run: ./gradlew koverXmlReport
+
+      - name: Upload coverage reports to Codecov
+        uses: codecov/codecov-action@v4
+        with:
+          directory: ./build/reports/kover
+          files: ./report.xml
+        env:
+          CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}

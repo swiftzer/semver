@@ -1,6 +1,8 @@
 import io.gitlab.arturbosch.detekt.Detekt
 import org.jetbrains.dokka.gradle.DokkaTask
+import java.io.FileInputStream
 import java.net.URL
+import java.util.Properties
 
 plugins {
     alias(libs.plugins.kotlin.multiplatform)
@@ -14,8 +16,21 @@ plugins {
     signing
 }
 
+val publishingPropertiesFile: File = rootProject.file("publishing.properties")
+val publishingProperties = Properties()
+if (publishingPropertiesFile.exists()) {
+    publishingProperties.load(FileInputStream(publishingPropertiesFile))
+}
+
 group = "net.swiftzer.semver"
-version = "2.0.0-SNAPSHOT"
+version = buildString {
+    append("2.0.0")
+    val suffix = getProperty("versionSuffix")
+    if (suffix != null) {
+        append("-")
+        append(suffix)
+    }
+}
 
 kotlin {
     explicitApi()
@@ -82,7 +97,7 @@ tasks.withType<DokkaTask>().configureEach {
         sourceLink {
             val relPath = rootProject.projectDir.toPath().relativize(projectDir.toPath())
             localDirectory = projectDir.resolve("src")
-            remoteUrl = URL("https://github.com/swiftzer/semver/tree/multiplatform/${relPath}/src")
+            remoteUrl = URL("https://github.com/swiftzer/semver/tree/main/$relPath/src")
             remoteLineSuffix = "#L"
         }
     }
@@ -91,17 +106,19 @@ tasks.withType<DokkaTask>().configureEach {
 publishing {
     repositories {
         maven {
-            val isSnapshot = version.toString().endsWith("SNAPSHOT")
-            url = uri(
-                if (isSnapshot) {
-                    "https://oss.sonatype.org/content/repositories/snapshots"
-                } else {
-                    "https://oss.sonatype.org/service/local/staging/deploy/maven2"
-                }
-            )
+            name = "staging"
+            url = uri("https://oss.sonatype.org/service/local/staging/deploy/maven2")
             credentials {
-                username = providers.gradleProperty("ossrhUsername").orNull
-                password = providers.gradleProperty("ossrhPassword").orNull
+                username = getProperty("ossrhUsername")
+                password = getProperty("ossrhPassword")
+            }
+        }
+        maven {
+            name = "snapshot"
+            url = uri("https://oss.sonatype.org/content/repositories/snapshots")
+            credentials {
+                username = getProperty("ossrhUsername")
+                password = getProperty("ossrhPassword")
             }
         }
 
@@ -146,8 +163,8 @@ publishing {
 
         signing {
             useInMemoryPgpKeys(
-                providers.gradleProperty("signingKey").orNull,
-                providers.gradleProperty("signingPassword").orNull,
+                getProperty("signingKey"),
+                getProperty("signingPassword"),
             )
             sign(publishing.publications)
         }
@@ -159,4 +176,8 @@ publishing {
 
 tasks.register("detektAll") {
     dependsOn(tasks.withType<Detekt>())
+}
+
+fun getProperty(propertyName: String): String? {
+    return System.getenv()[propertyName] ?: publishingProperties.getProperty(propertyName)
 }

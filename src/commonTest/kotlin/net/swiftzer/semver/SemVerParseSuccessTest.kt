@@ -10,7 +10,7 @@ class SemVerParseSuccessTest : FunSpec({
         val expected: SemVer,
     )
     withData(
-        nameFn = { it.version },
+        nameFn = { "success case [${it.version}]" },
         ts = sequenceOf(
             Param(
                 version = "0.0.4",
@@ -156,7 +156,7 @@ class SemVerParseSuccessTest : FunSpec({
                 version = "1.0.0-0A.is.legal",
                 expected = SemVer(major = 1, minor = 0, patch = 0, preRelease = "0A.is.legal"),
             ),
-        )
+        ),
     ) {
         SemVer.parse(it.version) shouldBe it.expected
         SemVer.parseOrNull(it.version) shouldBe it.expected

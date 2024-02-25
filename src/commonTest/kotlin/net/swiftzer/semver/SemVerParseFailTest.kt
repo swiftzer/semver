@@ -7,7 +7,8 @@ import io.kotest.matchers.nulls.shouldBeNull
 
 class SemVerParseFailTest : FunSpec({
     withData(
-        sequenceOf(
+        nameFn = { "fail case [$it]" },
+        ts = sequenceOf(
             "v1.2.3",
             " 1.2.3",
             "1.2.3 ",
@@ -51,7 +52,7 @@ class SemVerParseFailTest : FunSpec({
             "9.8.7+meta+meta",
             "9.8.7-whatever+meta+meta",
             "99999999999999999999999.999999999999999999.99999999999999999----RC-SNAPSHOT.12.09.1--------------------------------..12",
-        )
+        ),
     ) {
         shouldThrow<IllegalArgumentException> { SemVer.parse(it) }
         SemVer.parseOrNull(it).shouldBeNull()

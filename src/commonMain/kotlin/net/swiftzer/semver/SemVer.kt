@@ -31,7 +31,7 @@ public data class SemVer(
     }
 
     /**
-     * Create a new [SemVer] with the next major number. Minor and patch number become 0.
+     * Create a new [SemVer] with the next major number. Minor and patch number becomes 0.
      * Pre-release and build metadata information is not applied to the new version.
      *
      * @return next major version
@@ -165,8 +165,10 @@ public data class SemVer(
         @JvmStatic
         @Suppress("DestructuringDeclarationWithTooManyEntries")
         public fun parse(version: String): SemVer {
-            val (major, minor, patch, preRelease, buildMetadata) = (FullPattern.matchEntire(version)
-                ?: throw IllegalArgumentException("Invalid version string [$version]")).destructured
+            val (major, minor, patch, preRelease, buildMetadata) = (
+                    FullPattern.matchEntire(version)
+                        ?: throw IllegalArgumentException("Invalid version string [$version]")
+                    ).destructured
             return SemVer(
                 major = major.toInt(),
                 minor = minor.toInt(),
