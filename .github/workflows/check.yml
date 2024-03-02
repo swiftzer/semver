@@ -24,6 +24,9 @@ jobs:
       - name: Kotlin binary compatibility validator
         run: ./gradlew apiCheck
 
+      - name: Check style
+        run: ./gradlew spotlessCheck
+
       - name: Detekt
         run: ./gradlew detektAll
 
