@@ -34,6 +34,7 @@ version = buildString {
 
 kotlin {
     explicitApi()
+
     jvm {
         compilations.all {
             kotlinOptions.jvmTarget = "1.8"
@@ -42,6 +43,7 @@ kotlin {
             useJUnitPlatform()
         }
     }
+
     js(IR) {
         browser()
         nodejs()
@@ -175,9 +177,9 @@ publishing {
 }
 
 tasks.register("detektAll") {
+    group = "verification"
     dependsOn(tasks.withType<Detekt>())
 }
 
-fun getProperty(propertyName: String): String? {
-    return System.getenv()[propertyName] ?: publishingProperties.getProperty(propertyName)
-}
+fun getProperty(propertyName: String): String? =
+    providers.environmentVariable(propertyName).orNull ?: publishingProperties.getProperty(propertyName)

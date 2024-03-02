@@ -166,9 +166,9 @@ public data class SemVer(
         @Suppress("DestructuringDeclarationWithTooManyEntries")
         public fun parse(version: String): SemVer {
             val (major, minor, patch, preRelease, buildMetadata) = (
-                    FullPattern.matchEntire(version)
-                        ?: throw IllegalArgumentException("Invalid version string [$version]")
-                    ).destructured
+                FullPattern.matchEntire(version)
+                    ?: throw IllegalArgumentException("Invalid version string [$version]")
+                ).destructured
             return SemVer(
                 major = major.toInt(),
                 minor = minor.toInt(),
