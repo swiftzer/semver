@@ -1,2 +1,9 @@
 gradlew eol=lf
 *.bat eol=crlf
+*.kt eol=lf
+*.kts eol=lf
+*.yml eol=lf
+*.yaml eol=lf
+*.toml eol=lf
+*.md eol=lf
+*.api eol=lf

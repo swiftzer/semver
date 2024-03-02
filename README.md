@@ -1,9 +1,10 @@
 # SemVer
 
-[![Build Status](https://travis-ci.org/swiftzer/semver.svg?branch=master)](https://travis-ci.org/swiftzer/semver)
-[![codecov](https://codecov.io/gh/swiftzer/semver/branch/master/graph/badge.svg)](https://codecov.io/gh/swiftzer/semver)
+[![codecov](https://codecov.io/gh/swiftzer/semver/graph/badge.svg?token=iJ3CY95nl6)](https://codecov.io/gh/swiftzer/semver)
 
-Kotlin data class for [Semantic Versioning 2.0.0](http://semver.org/spec/v2.0.0.html) specification.
+Kotlin data class for [Semantic Versioning 2.0.0](http://semver.org/spec/v2.0.0.html) specification with
+Kotlin [Multiplatform](https://kotlinlang.org/docs/multiplatform-get-started.html)
+and [Serialization](https://kotlinlang.org/docs/serialization.html) support.
 
 Support parsing version number string and comparing version numbers using `Comparable` interface.
 
@@ -11,13 +12,13 @@ Support parsing version number string and comparing version numbers using `Compa
 
 Gradle
 
-```groovy
+```kotlin
 repositories {
     mavenCentral()
 }
 
 dependencies {
-    implementation 'net.swiftzer.semver:semver:1.1.2'
+    implementation("net.swiftzer.semver:semver:2.0.0")
 }
 ```
 
@@ -40,7 +41,7 @@ Comparing version numbers
 ```kotlin
 val semVer1 = SemVer(1, 0, 0)
 val semVer2 = SemVer(1, 0, 2)
-assertEquals(-1, semVer1.compareTo(semVer2))
+assertTrue(semVer1 < semVer2)
 ```
 
 Creating next version numbers
