@@ -1,5 +1,5 @@
 [versions]
-detekt = "1.23.4"
+detekt = "1.23.5"
 dokka = "1.9.10"
 kotest = "5.8.0"
 kotlin = "1.9.22"
