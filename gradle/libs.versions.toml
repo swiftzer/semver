@@ -2,7 +2,7 @@
 detekt = "1.23.5"
 dokka = "1.9.20"
 kotest = "5.8.0"
-kotlin = "1.9.22"
+kotlin = "1.9.23"
 kotlinxBinaryCompatibilityValidator = "0.14.0"
 kotlinxSerialization = "1.6.3"
 kover = "0.7.6"
