@@ -17,6 +17,8 @@ gradle-app.setting
 # Cache of project
 .gradletasknamecache
 
+### Kotlin ###
+.kotlin
 
 ### OSX ###
 *.DS_Store

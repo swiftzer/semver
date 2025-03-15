@@ -67,7 +67,7 @@ jobs:
       - uses: ./.github/workflows/setup-gradle
 
       - name: Dokka
-        run: ./gradlew dokkaHtml
+        run: ./gradlew :dokkaGenerate
 
       - name: Upload Dokka docs to GitHub Pages
         uses: actions/upload-pages-artifact@v3
