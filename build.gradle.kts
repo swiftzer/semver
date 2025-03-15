@@ -1,17 +1,19 @@
+@file:OptIn(ExperimentalWasmDsl::class)
+
 import io.gitlab.arturbosch.detekt.Detekt
-import org.jetbrains.dokka.gradle.DokkaTask
+import org.jetbrains.kotlin.gradle.ExperimentalWasmDsl
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import java.io.FileInputStream
-import java.net.URL
 import java.util.Properties
 
 plugins {
     alias(libs.plugins.kotlin.multiplatform)
-    alias(libs.plugins.kotest.multiplatform)
     alias(libs.plugins.kotlinx.binaryCompatibilityValidator)
     alias(libs.plugins.kotlinx.serialization)
     alias(libs.plugins.dokka)
     alias(libs.plugins.kover)
     alias(libs.plugins.detekt)
+    alias(libs.plugins.burst)
     `maven-publish`
     signing
 }
@@ -36,9 +38,7 @@ kotlin {
     explicitApi()
 
     jvm {
-        compilations.all {
-            kotlinOptions.jvmTarget = "1.8"
-        }
+        compilerOptions.jvmTarget = JvmTarget.JVM_1_8
         testRuns["test"].executionTask.configure {
             useJUnitPlatform()
         }
@@ -47,6 +47,11 @@ kotlin {
     js(IR) {
         browser()
         nodejs()
+    }
+
+    wasmJs {
+        nodejs()
+        binaries.executable()
     }
 
     mingwX64()
@@ -83,24 +88,23 @@ kotlin {
             implementation(libs.kotlinx.serialization.core)
         }
         commonTest.dependencies {
-            implementation(libs.kotest.frameworkEngine)
-            implementation(libs.kotest.frameworkDatatest)
+            implementation(libs.kotlin.test)
             implementation(libs.kotest.assertionsCore)
             implementation(libs.kotlinx.serialization.json)
         }
         jvmTest.dependencies {
-            implementation(libs.kotest.runnerJunit5)
+            implementation(libs.kotlin.test.junit5)
         }
     }
 }
 
-tasks.withType<DokkaTask>().configureEach {
+dokka {
     dokkaSourceSets.configureEach {
         sourceLink {
             val relPath = rootProject.projectDir.toPath().relativize(projectDir.toPath())
-            localDirectory = projectDir.resolve("src")
-            remoteUrl = URL("https://github.com/swiftzer/semver/tree/main/$relPath/src")
-            remoteLineSuffix = "#L"
+            localDirectory.set(project.file("src"))
+            remoteUrl("https://github.com/swiftzer/semver/tree/main/$relPath/src")
+            remoteLineSuffix.set("#L")
         }
     }
 }
@@ -125,7 +129,7 @@ publishing {
         }
 
         val javadocJar = tasks.register<Jar>("javadocJar") {
-            dependsOn(tasks.dokkaHtml)
+            dependsOn(tasks.dokkaGenerate)
             archiveClassifier = "javadoc"
             from(layout.buildDirectory.file("dokka"))
         }

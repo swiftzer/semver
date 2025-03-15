@@ -1,3 +1,5 @@
+@file:Suppress("UnstableApiUsage")
+
 pluginManagement {
     repositories {
         mavenCentral()
@@ -12,16 +14,16 @@ dependencyResolutionManagement {
 }
 
 plugins {
-    id("com.gradle.enterprise") version "3.16.2"
+    id("com.gradle.develocity") version "3.19.2"
 }
 
 val isCiBuild = providers.environmentVariable("CI").isPresent
 
-gradleEnterprise {
+develocity {
     buildScan {
-        termsOfServiceUrl = "https://gradle.com/terms-of-service"
-        termsOfServiceAgree = "yes"
-        publishAlwaysIf(isCiBuild)
+        termsOfUseUrl.set("https://gradle.com/help/legal-terms-of-use")
+        termsOfUseAgree.set("yes")
+        publishing.onlyIf { isCiBuild }
     }
 }
 
