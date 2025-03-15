@@ -55,7 +55,7 @@ jobs:
       - uses: ./.github/workflows/setup-gradle
 
       - name: Publish to Central Portal
-        run: ./gradlew publishAllPublicationsToStagingRepository
+        run: ./gradlew publishToMavenCentral
 
   docs:
     runs-on: ubuntu-latest
