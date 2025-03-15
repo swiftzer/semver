@@ -31,7 +31,7 @@ jobs:
     strategy:
       matrix:
         config: [
-          { os: ubuntu-latest, tasks: jvmTest jsTest linuxX64Test },
+          { os: ubuntu-latest, tasks: jvmTest jsTest linuxX64Test wasmJsNodeTest },
           { os: windows-latest, tasks: mingwX64Test },
           { os: macos-latest, tasks: iosSimulatorArm64Test iosX64Test macosArm64Test macosX64Test tvosSimulatorArm64Test tvosX64Test watchosSimulatorArm64Test watchosX64Test },
         ]

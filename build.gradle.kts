@@ -1,4 +1,7 @@
+@file:OptIn(ExperimentalWasmDsl::class)
+
 import io.gitlab.arturbosch.detekt.Detekt
+import org.jetbrains.kotlin.gradle.ExperimentalWasmDsl
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import java.io.FileInputStream
 import java.util.Properties
@@ -44,6 +47,11 @@ kotlin {
     js(IR) {
         browser()
         nodejs()
+    }
+
+    wasmJs {
+        nodejs()
+        binaries.executable()
     }
 
     mingwX64()
