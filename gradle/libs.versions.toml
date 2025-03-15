@@ -2,6 +2,7 @@
 burst = "2.4.0"
 detekt = "1.23.8"
 dokka = "2.0.0"
+gradleMavenPublish = "0.31.0"
 kotest = "5.9.1"
 kotlin = "2.1.10"
 kotlinxBinaryCompatibilityValidator = "0.17.0"
@@ -19,6 +20,7 @@ kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serializa
 burst = { id = "app.cash.burst", version.ref = "burst" }
 detekt = { id = "io.gitlab.arturbosch.detekt", version.ref = "detekt" }
 dokka = { id = "org.jetbrains.dokka", version.ref = "dokka" }
+gradleMavenPublish = { id = "com.vanniktech.maven.publish", version.ref = "gradleMavenPublish" }
 kotlin-multiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin" }
 kotlinx-binaryCompatibilityValidator = { id = "org.jetbrains.kotlinx.binary-compatibility-validator", version.ref = "kotlinxBinaryCompatibilityValidator" }
 kotlinx-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }

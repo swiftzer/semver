@@ -1,5 +1,6 @@
 @file:OptIn(ExperimentalWasmDsl::class)
 
+import com.vanniktech.maven.publish.SonatypeHost
 import io.gitlab.arturbosch.detekt.Detekt
 import org.jetbrains.kotlin.gradle.ExperimentalWasmDsl
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
@@ -14,24 +15,13 @@ plugins {
     alias(libs.plugins.kover)
     alias(libs.plugins.detekt)
     alias(libs.plugins.burst)
-    `maven-publish`
-    signing
+    alias(libs.plugins.gradleMavenPublish)
 }
 
 val publishingPropertiesFile: File = rootProject.file("publishing.properties")
 val publishingProperties = Properties()
 if (publishingPropertiesFile.exists()) {
     publishingProperties.load(FileInputStream(publishingPropertiesFile))
-}
-
-group = "net.swiftzer.semver"
-version = buildString {
-    append("2.0.0")
-    val suffix = getProperty("versionSuffix")
-    if (suffix != null) {
-        append("-")
-        append(suffix)
-    }
 }
 
 kotlin {
@@ -109,73 +99,44 @@ dokka {
     }
 }
 
-publishing {
-    repositories {
-        maven {
-            name = "staging"
-            url = uri("https://oss.sonatype.org/service/local/staging/deploy/maven2")
-            credentials {
-                username = getProperty("ossrhUsername")
-                password = getProperty("ossrhPassword")
+mavenPublishing {
+    publishToMavenCentral(SonatypeHost.CENTRAL_PORTAL)
+    signAllPublications()
+    coordinates(
+        groupId = "net.swiftzer.semver",
+        artifactId = "semver",
+        version = buildString {
+            append("2.0.0")
+            val suffix = getProperty("versionSuffix")
+            if (suffix != null) {
+                append("-")
+                append(suffix)
+            }
+        },
+    )
+    pom {
+        name.set("SemVer")
+        description.set("Kotlin data class for Semantic Versioning 2.0.0")
+        inceptionYear.set("2017")
+        url.set("https://github.com/swiftzer/semver")
+        licenses {
+            license {
+                name.set("MIT License")
+                url.set("https://opensource.org/licenses/MIT")
+                distribution.set("https://opensource.org/licenses/MIT")
             }
         }
-        maven {
-            name = "snapshot"
-            url = uri("https://oss.sonatype.org/content/repositories/snapshots")
-            credentials {
-                username = getProperty("ossrhUsername")
-                password = getProperty("ossrhPassword")
+        developers {
+            developer {
+                id.set("ericksli")
+                name.set("Eric Li")
+                email.set("eric@swiftzer.net")
             }
         }
-
-        val javadocJar = tasks.register<Jar>("javadocJar") {
-            dependsOn(tasks.dokkaGenerate)
-            archiveClassifier = "javadoc"
-            from(layout.buildDirectory.file("dokka"))
-        }
-
-        publications {
-            withType<MavenPublication> {
-                artifact(javadocJar)
-                pom {
-                    name = "SemVer"
-                    description = "Kotlin data class for Semantic Versioning 2.0.0"
-                    licenses {
-                        license {
-                            name = "MIT License"
-                            url = "https://opensource.org/licenses/mit-license.php"
-                        }
-                    }
-                    url = "https://github.com/swiftzer/semver"
-                    issueManagement {
-                        system = "GitHub"
-                        url = "https://github.com/swiftzer/semver/issues"
-                    }
-                    scm {
-                        connection = "scm:git:github.com/swiftzer/semver.git"
-                        developerConnection = "scm:git:ssh://github.com/swiftzer/semver.git"
-                        url = "https://github.com/swiftzer/semver/tree/main"
-                    }
-                    developers {
-                        developer {
-                            id = "ericksli"
-                            name = "Eric Li"
-                            email = "eric@swiftzer.net"
-                        }
-                    }
-                }
-            }
-        }
-
-        signing {
-            useInMemoryPgpKeys(
-                getProperty("signingKey"),
-                getProperty("signingPassword"),
-            )
-            sign(publishing.publications)
-        }
-        project.tasks.withType<AbstractPublishToMaven>().configureEach {
-            dependsOn(project.tasks.withType<Sign>())
+        scm {
+            url.set("https://github.com/swiftzer/semver/tree/main")
+            connection.set("scm:git:ssh://github.com/swiftzer/semver.git")
+            developerConnection.set("scm:git:ssh://github.com/swiftzer/semver.git")
         }
     }
 }
