@@ -26,10 +26,10 @@ jobs:
     if: ${{ github.event.inputs.repo == 'snapshot' }}
     runs-on: macos-latest
     env:
-      ossrhUsername: ${{ secrets.OSSRH_USERNAME }}
-      ossrhPassword: ${{ secrets.OSSRH_PASSWORD }}
-      signingKey: ${{ secrets.SIGNING_KEY }}
-      signingPassword: ${{ secrets.SIGNING_PASSWORD }}
+      ORG_GRADLE_PROJECT_mavenCentralUsername: ${{ secrets.MAVEN_CENTRAL_USERNAME }}
+      ORG_GRADLE_PROJECT_mavenCentralPassword: ${{ secrets.MAVEN_CENTRAL_PASSWORD }}
+      ORG_GRADLE_PROJECT_signingInMemoryKey: ${{ secrets.SIGNING_KEY }}
+      ORG_GRADLE_PROJECT_signingInMemoryKeyPassword: ${{ secrets.SIGNING_PASSWORD }}
       versionSuffix: SNAPSHOT
     steps:
       - name: Checkout
@@ -37,24 +37,24 @@ jobs:
 
       - uses: ./.github/workflows/setup-gradle
 
-      - name: Publish to snapshot repository
-        run: ./gradlew publishAllPublicationsToSnapshotRepository
+      - name: Publish to Central Portal Snapshots
+        run: ./gradlew publishAllPublicationsToMavenCentralRepository
 
   staging:
     if: ${{ github.event.inputs.repo == 'staging' }}
     runs-on: macos-latest
     env:
-      ossrhUsername: ${{ secrets.OSSRH_USERNAME }}
-      ossrhPassword: ${{ secrets.OSSRH_PASSWORD }}
-      signingKey: ${{ secrets.SIGNING_KEY }}
-      signingPassword: ${{ secrets.SIGNING_PASSWORD }}
+      ORG_GRADLE_PROJECT_mavenCentralUsername: ${{ secrets.MAVEN_CENTRAL_USERNAME }}
+      ORG_GRADLE_PROJECT_mavenCentralPassword: ${{ secrets.MAVEN_CENTRAL_PASSWORD }}
+      ORG_GRADLE_PROJECT_signingInMemoryKey: ${{ secrets.SIGNING_KEY }}
+      ORG_GRADLE_PROJECT_signingInMemoryKeyPassword: ${{ secrets.SIGNING_PASSWORD }}
     steps:
       - name: Checkout
         uses: actions/checkout@v4
 
       - uses: ./.github/workflows/setup-gradle
 
-      - name: Publish to staging repository
+      - name: Publish to Central Portal
         run: ./gradlew publishAllPublicationsToStagingRepository
 
   docs:
