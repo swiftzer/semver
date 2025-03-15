@@ -3,8 +3,8 @@
 [![codecov](https://codecov.io/gh/swiftzer/semver/graph/badge.svg?token=iJ3CY95nl6)](https://codecov.io/gh/swiftzer/semver)
 
 Kotlin data class for [Semantic Versioning 2.0.0](http://semver.org/spec/v2.0.0.html) specification with
-Kotlin [Multiplatform](https://kotlinlang.org/docs/multiplatform-get-started.html)
-and [Serialization](https://kotlinlang.org/docs/serialization.html) support.
+[Kotlin Multiplatform](https://kotlinlang.org/docs/multiplatform-get-started.html)
+and [Kotlin Serialization](https://kotlinlang.org/docs/serialization.html) support.
 
 Support parsing version number string and comparing version numbers using `Comparable` interface.
 
@@ -18,7 +18,7 @@ repositories {
 }
 
 dependencies {
-    implementation("net.swiftzer.semver:semver:2.0.0")
+    implementation("net.swiftzer.semver:semver:2.1.0")
 }
 ```
 
