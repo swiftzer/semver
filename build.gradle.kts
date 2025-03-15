@@ -106,7 +106,7 @@ mavenPublishing {
         groupId = "net.swiftzer.semver",
         artifactId = "semver",
         version = buildString {
-            append("2.0.0")
+            append("2.1.0")
             val suffix = getProperty("versionSuffix")
             if (suffix != null) {
                 append("-")
