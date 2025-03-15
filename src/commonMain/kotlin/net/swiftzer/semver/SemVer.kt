@@ -99,9 +99,10 @@ public data class SemVer(
                     val otherPartLong = otherPart.toLong()
                     partLong.compareTo(otherPartLong)
                 } catch (_: NumberFormatException) {
-                    // When part or otherPart doesn't fit in an Long, compare as String
-                    // It is not the standard way but because there are no proper BigDecimal class for Kotlin
-                    // Multiplatform we have to use this way
+                    // When part or otherPart doesn't fit in Long type, compare as String
+                    // It is not the standard way,
+                    // but because there is no proper BigDecimal class for Kotlin Multiplatform,
+                    // we have to use this way
                     part.compareTo(otherPart)
                 }
             }
@@ -149,10 +150,18 @@ public data class SemVer(
         }
     }
 
-    private fun String.isNumeric(): Boolean = numericPattern.matches(this)
+    private fun String.isNumeric(): Boolean = NumericPattern.matches(this)
 
     public companion object {
-        private val numericPattern = Regex("""\d+""")
+        private val NumericPattern = Regex("""^\d+$""")
+        private val PreReleasePattern =
+            Regex("""^(?:0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*)(?:\.(?:0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*))*$""")
+        private val BuildMetadataPattern: Regex = Regex("""^[0-9a-zA-Z-]+(?:\.[0-9a-zA-Z-]+)*$""")
+
+        @Suppress("MaxLineLength")
+        private val FullPattern = Regex(
+            """^(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)(?:-((?:0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*)(?:\.(?:0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*))*))?(?:\+([0-9a-zA-Z-]+(?:\.[0-9a-zA-Z-]+)*))?$""",
+        )
 
         /**
          * Parse the version string to [SemVer].
