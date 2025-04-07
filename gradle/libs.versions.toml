@@ -6,7 +6,7 @@ gradleMavenPublish = "0.31.0"
 kotest = "5.9.1"
 kotlin = "2.1.10"
 kotlinxBinaryCompatibilityValidator = "0.17.0"
-kotlinxSerialization = "1.8.0"
+kotlinxSerialization = "1.8.1"
 kover = "0.9.1"
 
 [libraries]
