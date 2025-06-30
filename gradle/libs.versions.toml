@@ -1,5 +1,5 @@
 [versions]
-burst = "2.5.0"
+burst = "2.6.0"
 detekt = "1.23.8"
 dokka = "2.0.0"
 gradleMavenPublish = "0.33.0"
