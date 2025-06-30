@@ -5,7 +5,7 @@ dokka = "2.0.0"
 gradleMavenPublish = "0.33.0"
 kotest = "5.9.1"
 kotlin = "2.1.21"
-kotlinxBinaryCompatibilityValidator = "0.17.0"
+kotlinxBinaryCompatibilityValidator = "0.18.0"
 kotlinxSerialization = "1.8.1"
 kover = "0.9.1"
 
