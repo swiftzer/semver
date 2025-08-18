@@ -17,7 +17,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - uses: ./.github/workflows/setup-gradle
 
@@ -39,7 +39,7 @@ jobs:
     runs-on: ${{ matrix.config.os }}
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - uses: ./.github/workflows/setup-gradle
 
@@ -59,7 +59,7 @@ jobs:
     needs: [ test ]
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - uses: ./.github/workflows/setup-gradle
 
