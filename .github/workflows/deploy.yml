@@ -33,7 +33,7 @@ jobs:
       versionSuffix: SNAPSHOT
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - uses: ./.github/workflows/setup-gradle
 
@@ -50,7 +50,7 @@ jobs:
       ORG_GRADLE_PROJECT_signingInMemoryKeyPassword: ${{ secrets.SIGNING_PASSWORD }}
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - uses: ./.github/workflows/setup-gradle
 
@@ -62,7 +62,7 @@ jobs:
     needs: staging
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - uses: ./.github/workflows/setup-gradle
 
