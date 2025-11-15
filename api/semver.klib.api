@@ -1,0 +1,51 @@
+// Klib ABI Dump
+// Targets: [iosArm64, iosSimulatorArm64, iosX64, js, linuxArm64, linuxX64, macosArm64, macosX64, mingwX64, tvosArm64, tvosSimulatorArm64, tvosX64, wasmJs, watchosArm32, watchosArm64, watchosDeviceArm64, watchosSimulatorArm64, watchosX64]
+// Rendering settings:
+// - Signature version: 2
+// - Show manifest properties: true
+// - Show declarations: true
+
+// Library unique name: <semver>
+final class net.swiftzer.semver/SemVer : kotlin/Comparable<net.swiftzer.semver/SemVer> { // net.swiftzer.semver/SemVer|null[0]
+    constructor <init>(kotlin/Int, kotlin/Int = ..., kotlin/Int = ..., kotlin/String? = ..., kotlin/String? = ...) // net.swiftzer.semver/SemVer.<init>|<init>(kotlin.Int;kotlin.Int;kotlin.Int;kotlin.String?;kotlin.String?){}[0]
+
+    final val buildMetadata // net.swiftzer.semver/SemVer.buildMetadata|{}buildMetadata[0]
+        final fun <get-buildMetadata>(): kotlin/String? // net.swiftzer.semver/SemVer.buildMetadata.<get-buildMetadata>|<get-buildMetadata>(){}[0]
+    final val major // net.swiftzer.semver/SemVer.major|{}major[0]
+        final fun <get-major>(): kotlin/Int // net.swiftzer.semver/SemVer.major.<get-major>|<get-major>(){}[0]
+    final val minor // net.swiftzer.semver/SemVer.minor|{}minor[0]
+        final fun <get-minor>(): kotlin/Int // net.swiftzer.semver/SemVer.minor.<get-minor>|<get-minor>(){}[0]
+    final val patch // net.swiftzer.semver/SemVer.patch|{}patch[0]
+        final fun <get-patch>(): kotlin/Int // net.swiftzer.semver/SemVer.patch.<get-patch>|<get-patch>(){}[0]
+    final val preRelease // net.swiftzer.semver/SemVer.preRelease|{}preRelease[0]
+        final fun <get-preRelease>(): kotlin/String? // net.swiftzer.semver/SemVer.preRelease.<get-preRelease>|<get-preRelease>(){}[0]
+
+    final fun compareTo(net.swiftzer.semver/SemVer): kotlin/Int // net.swiftzer.semver/SemVer.compareTo|compareTo(net.swiftzer.semver.SemVer){}[0]
+    final fun component1(): kotlin/Int // net.swiftzer.semver/SemVer.component1|component1(){}[0]
+    final fun component2(): kotlin/Int // net.swiftzer.semver/SemVer.component2|component2(){}[0]
+    final fun component3(): kotlin/Int // net.swiftzer.semver/SemVer.component3|component3(){}[0]
+    final fun component4(): kotlin/String? // net.swiftzer.semver/SemVer.component4|component4(){}[0]
+    final fun component5(): kotlin/String? // net.swiftzer.semver/SemVer.component5|component5(){}[0]
+    final fun copy(kotlin/Int = ..., kotlin/Int = ..., kotlin/Int = ..., kotlin/String? = ..., kotlin/String? = ...): net.swiftzer.semver/SemVer // net.swiftzer.semver/SemVer.copy|copy(kotlin.Int;kotlin.Int;kotlin.Int;kotlin.String?;kotlin.String?){}[0]
+    final fun equals(kotlin/Any?): kotlin/Boolean // net.swiftzer.semver/SemVer.equals|equals(kotlin.Any?){}[0]
+    final fun hashCode(): kotlin/Int // net.swiftzer.semver/SemVer.hashCode|hashCode(){}[0]
+    final fun isInitialDevelopmentPhase(): kotlin/Boolean // net.swiftzer.semver/SemVer.isInitialDevelopmentPhase|isInitialDevelopmentPhase(){}[0]
+    final fun nextMajor(): net.swiftzer.semver/SemVer // net.swiftzer.semver/SemVer.nextMajor|nextMajor(){}[0]
+    final fun nextMinor(): net.swiftzer.semver/SemVer // net.swiftzer.semver/SemVer.nextMinor|nextMinor(){}[0]
+    final fun nextPatch(): net.swiftzer.semver/SemVer // net.swiftzer.semver/SemVer.nextPatch|nextPatch(){}[0]
+    final fun toString(): kotlin/String // net.swiftzer.semver/SemVer.toString|toString(){}[0]
+
+    final object Companion { // net.swiftzer.semver/SemVer.Companion|null[0]
+        final fun parse(kotlin/String): net.swiftzer.semver/SemVer // net.swiftzer.semver/SemVer.Companion.parse|parse(kotlin.String){}[0]
+        final fun parseOrNull(kotlin/String): net.swiftzer.semver/SemVer? // net.swiftzer.semver/SemVer.Companion.parseOrNull|parseOrNull(kotlin.String){}[0]
+        final fun serializer(): kotlinx.serialization/KSerializer<net.swiftzer.semver/SemVer> // net.swiftzer.semver/SemVer.Companion.serializer|serializer(){}[0]
+    }
+}
+
+final object net.swiftzer.semver/SemVerSerializer : kotlinx.serialization/KSerializer<net.swiftzer.semver/SemVer> { // net.swiftzer.semver/SemVerSerializer|null[0]
+    final val descriptor // net.swiftzer.semver/SemVerSerializer.descriptor|{}descriptor[0]
+        final fun <get-descriptor>(): kotlinx.serialization.descriptors/SerialDescriptor // net.swiftzer.semver/SemVerSerializer.descriptor.<get-descriptor>|<get-descriptor>(){}[0]
+
+    final fun deserialize(kotlinx.serialization.encoding/Decoder): net.swiftzer.semver/SemVer // net.swiftzer.semver/SemVerSerializer.deserialize|deserialize(kotlinx.serialization.encoding.Decoder){}[0]
+    final fun serialize(kotlinx.serialization.encoding/Encoder, net.swiftzer.semver/SemVer) // net.swiftzer.semver/SemVerSerializer.serialize|serialize(kotlinx.serialization.encoding.Encoder;net.swiftzer.semver.SemVer){}[0]
+}

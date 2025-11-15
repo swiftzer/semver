@@ -1,12 +1,11 @@
 [versions]
-burst = "2.5.0"
+burst = "2.10.2"
 detekt = "1.23.8"
-dokka = "2.0.0"
-gradleMavenPublish = "0.33.0"
+dokka = "2.1.0"
+gradleMavenPublish = "0.35.0"
 kotest = "5.9.1"
-kotlin = "2.1.21"
-kotlinxBinaryCompatibilityValidator = "0.18.1"
-kotlinxSerialization = "1.8.1"
+kotlin = "2.2.21"
+kotlinxSerialization = "1.9.0"
 kover = "0.9.1"
 
 [libraries]
@@ -22,6 +21,5 @@ detekt = { id = "io.gitlab.arturbosch.detekt", version.ref = "detekt" }
 dokka = { id = "org.jetbrains.dokka", version.ref = "dokka" }
 gradleMavenPublish = { id = "com.vanniktech.maven.publish", version.ref = "gradleMavenPublish" }
 kotlin-multiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin" }
-kotlinx-binaryCompatibilityValidator = { id = "org.jetbrains.kotlinx.binary-compatibility-validator", version.ref = "kotlinxBinaryCompatibilityValidator" }
 kotlinx-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
 kover = { id = "org.jetbrains.kotlinx.kover", version.ref = "kover" }

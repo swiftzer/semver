@@ -3,16 +3,13 @@ description: Setup Gradle and JDK
 runs:
   using: composite
   steps:
-    - name: Check Gradle wrapper
-      uses: gradle/wrapper-validation-action@v2
-
     - name: Setup JDK
-      uses: actions/setup-java@v4
+      uses: actions/setup-java@v5
       with:
         distribution: microsoft
         java-version: '17'
 
     - name: Setup Gradle
-      uses: gradle/actions/setup-gradle@v3
+      uses: gradle/actions/setup-gradle@v5
       with:
         dependency-graph: generate-and-submit

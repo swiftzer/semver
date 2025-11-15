@@ -22,7 +22,7 @@ jobs:
       - uses: ./.github/workflows/setup-gradle
 
       - name: Kotlin binary compatibility validator
-        run: ./gradlew apiCheck
+        run: ./gradlew checkLegacyAbi
 
       - name: Detekt
         run: ./gradlew detektAll
